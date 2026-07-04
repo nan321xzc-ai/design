@@ -44,6 +44,29 @@
         ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #c4956a; }
         .noise::before { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+        .hero-title em {
+            font-style: normal;
+            color: #c4956a;
+            font-weight: 400;
+        }
+        .hero-title .line-break {
+            display: block;
+            margin-top: 0.15em;
+        }
+        .hero-deco-line {
+            width: 48px;
+            height: 1px;
+            background: linear-gradient(90deg, #c4956a, transparent);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero-desc {
+            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+            line-height: 1.8;
+            color: #8a8580;
+            max-width: 480px;
+        }
+
         .text-editorial {
             font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", sans-serif;
             font-weight: 400;
@@ -52,8 +75,19 @@
         }
         .text-editorial em { font-style: italic; color: #c4956a; }
         .nav-glass { background: rgba(12, 12, 12, 0.7); backdrop-filter: blur(24px) saturate(1.2); -webkit-backdrop-filter: blur(24px) saturate(1.2); }
-        .hero-title { font-size: clamp(3.5rem, 10vw, 9rem); line-height: 0.95; letter-spacing: -0.04em; }
-        .hero-subtitle { font-size: clamp(1rem, 1.5vw, 1.25rem); letter-spacing: 0.12em; text-transform: uppercase; }
+        .hero-title { 
+            font-size: clamp(2.6rem, 5.5vw, 4.8rem); 
+            line-height: 1.15; 
+            letter-spacing: 0.02em; 
+            font-weight: 300;
+        }
+        .hero-subtitle { 
+            font-size: clamp(0.75rem, 1vw, 0.9rem); 
+            letter-spacing: 0.2em; 
+            text-transform: uppercase; 
+            font-weight: 400;
+            color: #c4956a;
+        }
         .marquee-track { display: flex; animation: marquee-scroll 40s linear infinite; }
         @keyframes marquee-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .btn-primary { position: relative; display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 2.5rem; background: #c4956a; color: #0c0c0c; font-size: 0.875rem; font-weight: 500; letter-spacing: 0.02em; border-radius: 2px; overflow: hidden; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -186,6 +220,199 @@
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
         }
+    
+        /* ========== 作品详情模态框 ========== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(12, 12, 12, 0.92);
+            backdrop-filter: blur(20px) saturate(1.2);
+            -webkit-backdrop-filter: blur(20px) saturate(1.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            overflow-y: auto;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: #141414;
+            border: 1px solid rgba(245, 240, 232, 0.06);
+            border-radius: 8px;
+            max-width: 1100px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(40px) scale(0.96);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-container {
+            transform: translateY(0) scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(12, 12, 12, 0.7);
+            border: 1px solid rgba(245, 240, 232, 0.1);
+            color: #f5f0e8;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .modal-close:hover {
+            background: #c4956a;
+            color: #0c0c0c;
+            border-color: #c4956a;
+            transform: rotate(90deg);
+        }
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            min-height: 500px;
+        }
+        .modal-image-wrap {
+            position: relative;
+            overflow: hidden;
+            background: #0c0c0c;
+        }
+        .modal-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-image-wrap img {
+            transform: scale(1);
+        }
+        .modal-info {
+            padding: 48px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .modal-meta-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .modal-category-tag {
+            font-size: 0.7rem;
+            color: #c4956a;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            border: 1px solid rgba(196, 149, 106, 0.3);
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+        .modal-year {
+            font-size: 0.75rem;
+            color: #8a8580;
+            letter-spacing: 0.1em;
+        }
+        .modal-title {
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: #f5f0e8;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+        .modal-detail {
+            color: #a09a94;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+        .modal-divider {
+            height: 1px;
+            background: rgba(245, 240, 232, 0.06);
+            margin-bottom: 32px;
+        }
+        .modal-meta-row {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .modal-meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+        }
+        .modal-meta-label {
+            font-size: 0.7rem;
+            color: #8a8580;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .modal-meta-value {
+            font-size: 0.85rem;
+            color: #f5f0e8;
+            text-align: right;
+        }
+        .modal-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 40px;
+            border-top: 1px solid rgba(245, 240, 232, 0.06);
+            background: rgba(12, 12, 12, 0.4);
+        }
+        .modal-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #8a8580;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+        .modal-nav-btn:hover {
+            color: #c4956a;
+        }
+        .modal-nav-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .modal-counter {
+            font-size: 0.75rem;
+            color: #8a8580;
+            letter-spacing: 0.1em;
+        }
+        .modal-counter span {
+            color: #c4956a;
+        }
+        @media (max-width: 900px) {
+            .modal-grid { grid-template-columns: 1fr; }
+            .modal-image-wrap { max-height: 300px; }
+            .modal-info { padding: 32px 24px; }
+            .modal-title { font-size: 1.6rem; }
+            .modal-nav { padding: 16px 24px; }
+        }
+
     </style>
 </head>
 <body class="noise">
@@ -222,11 +449,16 @@
         <div class="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 w-full">
             <div class="grid lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7">
-                    <div class="hero-subtitle text-ochre mb-8 opacity-0" id="hero-label">Brand Designer & Visual Strategist</div>
-                    <h1 class="hero-title text-editorial text-parchment mb-10 opacity-0" id="hero-title">从活动视觉<br>到<em>品牌体系</em></h1>
-                    <p class="text-stone text-lg md:text-xl max-w-xl leading-relaxed mb-12 opacity-0" id="hero-desc">我是薛志超，90 后品牌视觉设计师 | 2018 年从业
-深耕品牌设计与活动视觉落地，服务华为、荣耀、三星、东风日产、保利地产等头部品牌
-累计落地 1000 + 商业项目，专注于品牌识别系统、视觉策略与全场景落地。</p>
+                    <div class="hero-subtitle mb-6 opacity-0" id="hero-label">Brand Designer & Visual Strategist</div>
+                    <h1 class="hero-title text-editorial text-parchment mb-8 opacity-0" id="hero-title">
+                        从活动视觉<span class="line-break"></span>到<em>品牌体系</em>
+                    </h1>
+                    <div class="hero-deco-line opacity-0" id="hero-deco"></div>
+                    <p class="hero-desc mb-12 opacity-0" id="hero-desc">
+                        我是薛志超，90 后品牌视觉设计师，2018 年从业至今。<br>
+                        深耕品牌设计与活动视觉落地，服务华为、荣耀、三星、东风日产、保利地产等头部品牌。<br>
+                        累计落地 1000+ 商业项目，专注于品牌识别系统、视觉策略与全场景落地。
+                    </p>
                     <div class="flex flex-wrap gap-4 opacity-0" id="hero-cta">
                         <a href="#works" class="btn-primary"><span>浏览作品</span></a>
                         <a href="#contact" class="btn-ghost">开始合作</a>
@@ -234,7 +466,7 @@
                 </div>
                 <div class="lg:col-span-5 hidden lg:block">
                     <div class="relative aspect-[3/4] rounded-sm overflow-hidden opacity-0" id="hero-image">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop&crop=face" alt="薛志超" class="w-full h-full object-cover" loading="eager">
+                        <img src="https://raw.githubusercontent.com/nan321xzc-ai/my-portfolio/main/1.png" alt="薛志超" class="w-full h-full object-cover" loading="eager">
                         <div class="absolute inset-0 bg-gradient-to-t from-ink/40 to-transparent"></div>
                     </div>
                     <div class="absolute -bottom-4 -left-4 w-full h-full border border-ochre/20 rounded-sm -z-10"></div>
@@ -337,7 +569,7 @@
 
             <!-- 瀑布流网格 -->
             <div class="masonry-grid" id="works-grid">
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="1" onclick="openProjectModal(1)">
                     <div class="project-number">01</div>
                     <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&h=600&fit=crop" alt="云栖科技" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -348,7 +580,7 @@
                         <p class="text-stone text-xs md:text-sm">为AI初创企业打造极简科技感的品牌视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="2" onclick="openProjectModal(2)">
                     <div class="project-number">02</div>
                     <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=800&h=600&fit=crop" alt="墨染咖啡" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -359,7 +591,7 @@
                         <p class="text-stone text-xs md:text-sm">东方美学与现代咖啡文化的视觉融合</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="strategy" data-id="3" onclick="openProjectModal(3)">
                     <div class="project-number">03</div>
                     <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop" alt="流光时尚" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -370,7 +602,7 @@
                         <p class="text-stone text-xs md:text-sm">高端女装品牌的全案视觉升级</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="4" onclick="openProjectModal(4)">
                     <div class="project-number">04</div>
                     <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=600&fit=crop" alt="青禾文化" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -381,7 +613,7 @@
                         <p class="text-stone text-xs md:text-sm">艺术展览机构的视觉识别与空间导视</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="5" onclick="openProjectModal(5)">
                     <div class="project-number">05</div>
                     <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop" alt="星辰教育" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -392,7 +624,7 @@
                         <p class="text-stone text-xs md:text-sm">在线教育平台的品牌重塑与UI/UX</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="6" onclick="openProjectModal(6)">
                     <div class="project-number">06</div>
                     <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&h=600&fit=crop" alt="野境户外" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -403,7 +635,7 @@
                         <p class="text-stone text-xs md:text-sm">户外装备品牌的野性美学视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="7" onclick="openProjectModal(7)">
                     <div class="project-number">07</div>
                     <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop" alt="智链科技" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -414,7 +646,7 @@
                         <p class="text-stone text-xs md:text-sm">区块链企业的品牌识别与视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="8" onclick="openProjectModal(8)">
                     <div class="project-number">08</div>
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=600&fit=crop" alt="锦绣华服" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -425,7 +657,7 @@
                         <p class="text-stone text-xs md:text-sm">传统服饰品牌的现代化视觉升级</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="9" onclick="openProjectModal(9)">
                     <div class="project-number">09</div>
                     <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop" alt="云端医疗" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -436,7 +668,7 @@
                         <p class="text-stone text-xs md:text-sm">互联网医疗平台的品牌与UI设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="10" onclick="openProjectModal(10)">
                     <div class="project-number">10</div>
                     <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop" alt="山海茶舍" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -447,7 +679,7 @@
                         <p class="text-stone text-xs md:text-sm">新中式茶饮品牌的视觉识别系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="11" onclick="openProjectModal(11)">
                     <div class="project-number">11</div>
                     <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" alt="极光影视" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -458,7 +690,7 @@
                         <p class="text-stone text-xs md:text-sm">影视制作公司的品牌视觉升级</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="12" onclick="openProjectModal(12)">
                     <div class="project-number">12</div>
                     <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop" alt="都市丽人" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -469,7 +701,7 @@
                         <p class="text-stone text-xs md:text-sm">美妆品牌的全案视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="13" onclick="openProjectModal(13)">
                     <div class="project-number">13</div>
                     <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=600&fit=crop" alt="智慧校园" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -480,7 +712,7 @@
                         <p class="text-stone text-xs md:text-sm">教育科技平台的数字化品牌体验</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="14" onclick="openProjectModal(14)">
                     <div class="project-number">14</div>
                     <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=600&fit=crop" alt="禅意空间" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -491,7 +723,7 @@
                         <p class="text-stone text-xs md:text-sm">室内设计工作室的品牌识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="15" onclick="openProjectModal(15)">
                     <div class="project-number">15</div>
                     <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&h=600&fit=crop" alt="未来出行" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -502,7 +734,7 @@
                         <p class="text-stone text-xs md:text-sm">新能源汽车品牌的视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="16" onclick="openProjectModal(16)">
                     <div class="project-number">16</div>
                     <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=600&fit=crop" alt="食光记" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -513,7 +745,7 @@
                         <p class="text-stone text-xs md:text-sm">餐饮连锁品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="17" onclick="openProjectModal(17)">
                     <div class="project-number">17</div>
                     <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop" alt="健康管家" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -524,7 +756,7 @@
                         <p class="text-stone text-xs md:text-sm">健康管理App的品牌与UI设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="18" onclick="openProjectModal(18)">
                     <div class="project-number">18</div>
                     <img src="https://images.unsplash.com/photo-1513519245088-0e12902e35a6?w=800&h=600&fit=crop" alt="墨韵书画" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -535,7 +767,7 @@
                         <p class="text-stone text-xs md:text-sm">书画艺术机构的品牌识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="19" onclick="openProjectModal(19)">
                     <div class="project-number">19</div>
                     <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&h=600&fit=crop" alt="星际探索" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -546,7 +778,7 @@
                         <p class="text-stone text-xs md:text-sm">航天科技企业的品牌视觉</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="20" onclick="openProjectModal(20)">
                     <div class="project-number">20</div>
                     <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&h=600&fit=crop" alt="潮流前线" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -557,7 +789,7 @@
                         <p class="text-stone text-xs md:text-sm">潮牌服饰的视觉策略升级</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="21" onclick="openProjectModal(21)">
                     <div class="project-number">21</div>
                     <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop" alt="金融管家" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -568,7 +800,7 @@
                         <p class="text-stone text-xs md:text-sm">金融科技平台的品牌重塑</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="22" onclick="openProjectModal(22)">
                     <div class="project-number">22</div>
                     <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop" alt="竹韵清风" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -579,7 +811,7 @@
                         <p class="text-stone text-xs md:text-sm">环保品牌的视觉识别系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="23" onclick="openProjectModal(23)">
                     <div class="project-number">23</div>
                     <img src="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=800&h=600&fit=crop" alt="量子计算" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -590,7 +822,7 @@
                         <p class="text-stone text-xs md:text-sm">量子科技企业的品牌设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="24" onclick="openProjectModal(24)">
                     <div class="project-number">24</div>
                     <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop" alt="味道江湖" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -601,7 +833,7 @@
                         <p class="text-stone text-xs md:text-sm">美食品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="25" onclick="openProjectModal(25)">
                     <div class="project-number">25</div>
                     <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop" alt="智能家居" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -612,7 +844,7 @@
                         <p class="text-stone text-xs md:text-sm">智能家居平台的品牌与UI</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="26" onclick="openProjectModal(26)">
                     <div class="project-number">26</div>
                     <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop" alt="水墨江南" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -623,7 +855,7 @@
                         <p class="text-stone text-xs md:text-sm">文旅品牌的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="27" onclick="openProjectModal(27)">
                     <div class="project-number">27</div>
                     <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&h=600&fit=crop" alt="生物科技" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -634,7 +866,7 @@
                         <p class="text-stone text-xs md:text-sm">生物科技企业的品牌视觉</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="28" onclick="openProjectModal(28)">
                     <div class="project-number">28</div>
                     <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&h=600&fit=crop" alt="时尚芭莎" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -645,7 +877,7 @@
                         <p class="text-stone text-xs md:text-sm">时尚杂志的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="29" onclick="openProjectModal(29)">
                     <div class="project-number">29</div>
                     <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop" alt="出行无忧" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -656,7 +888,7 @@
                         <p class="text-stone text-xs md:text-sm">出行平台的品牌重塑</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="30" onclick="openProjectModal(30)">
                     <div class="project-number">30</div>
                     <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop" alt="禅茶一味" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -667,7 +899,7 @@
                         <p class="text-stone text-xs md:text-sm">茶文化品牌的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="31" onclick="openProjectModal(31)">
                     <div class="project-number">31</div>
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop" alt="人工智能" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -678,7 +910,7 @@
                         <p class="text-stone text-xs md:text-sm">AI企业的品牌视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="32" onclick="openProjectModal(32)">
                     <div class="project-number">32</div>
                     <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop" alt="美味人生" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -689,7 +921,7 @@
                         <p class="text-stone text-xs md:text-sm">食品品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="33" onclick="openProjectModal(33)">
                     <div class="project-number">33</div>
                     <img src="https://images.unsplash.com/photo-1504384308090-c54be3855833?w=800&h=600&fit=crop" alt="社交达人" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -700,7 +932,7 @@
                         <p class="text-stone text-xs md:text-sm">社交平台的品牌与UI设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="34" onclick="openProjectModal(34)">
                     <div class="project-number">34</div>
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop" alt="山水之间" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -711,7 +943,7 @@
                         <p class="text-stone text-xs md:text-sm">民宿品牌的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="35" onclick="openProjectModal(35)">
                     <div class="project-number">35</div>
                     <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop" alt="清洁能源" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -722,7 +954,7 @@
                         <p class="text-stone text-xs md:text-sm">新能源企业的品牌设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="36" onclick="openProjectModal(36)">
                     <div class="project-number">36</div>
                     <img src="https://images.unsplash.com/photo-1504384308090-c54be3855833?w=800&h=600&fit=crop" alt="潮流生活" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -733,7 +965,7 @@
                         <p class="text-stone text-xs md:text-sm">生活方式品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="37" onclick="openProjectModal(37)">
                     <div class="project-number">37</div>
                     <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&h=600&fit=crop" alt="在线办公" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -744,7 +976,7 @@
                         <p class="text-stone text-xs md:text-sm">办公平台的品牌重塑</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="38" onclick="openProjectModal(38)">
                     <div class="project-number">38</div>
                     <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop" alt="古韵新风" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -755,7 +987,7 @@
                         <p class="text-stone text-xs md:text-sm">文创品牌的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="39" onclick="openProjectModal(39)">
                     <div class="project-number">39</div>
                     <img src="https://images.unsplash.com/photo-1497366754035-f201968f4c09?w=800&h=600&fit=crop" alt="深海探索" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -766,7 +998,7 @@
                         <p class="text-stone text-xs md:text-sm">海洋科技企业的品牌视觉</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="40" onclick="openProjectModal(40)">
                     <div class="project-number">40</div>
                     <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop" alt="美食地图" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -777,7 +1009,7 @@
                         <p class="text-stone text-xs md:text-sm">美食平台的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="41" onclick="openProjectModal(41)">
                     <div class="project-number">41</div>
                     <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&h=600&fit=crop" alt="智慧农业" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -788,7 +1020,7 @@
                         <p class="text-stone text-xs md:text-sm">农业科技平台的品牌与UI</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="42" onclick="openProjectModal(42)">
                     <div class="project-number">42</div>
                     <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop" alt="东方美学" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -799,7 +1031,7 @@
                         <p class="text-stone text-xs md:text-sm">艺术品牌的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="43" onclick="openProjectModal(43)">
                     <div class="project-number">43</div>
                     <img src="https://images.unsplash.com/photo-1504384308090-c54be3855833?w=800&h=600&fit=crop" alt="虚拟现实" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -810,7 +1042,7 @@
                         <p class="text-stone text-xs md:text-sm">VR企业的品牌视觉系统</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="44" onclick="openProjectModal(44)">
                     <div class="project-number">44</div>
                     <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop" alt="品质生活" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -821,7 +1053,7 @@
                         <p class="text-stone text-xs md:text-sm">家居品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="45" onclick="openProjectModal(45)">
                     <div class="project-number">45</div>
                     <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop" alt="在线购物" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -832,7 +1064,7 @@
                         <p class="text-stone text-xs md:text-sm">电商平台的品牌重塑</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="46" onclick="openProjectModal(46)">
                     <div class="project-number">46</div>
                     <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?w=800&h=600&fit=crop" alt="自然之声" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -843,7 +1075,7 @@
                         <p class="text-stone text-xs md:text-sm">环保组织的视觉识别</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="47" onclick="openProjectModal(47)">
                     <div class="project-number">47</div>
                     <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?w=800&h=600&fit=crop" alt="智慧城市" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -854,7 +1086,7 @@
                         <p class="text-stone text-xs md:text-sm">城市科技企业的品牌设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy">
+                <div class="masonry-item aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="48" onclick="openProjectModal(48)">
                     <div class="project-number">48</div>
                     <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop" alt="味道传承" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -865,7 +1097,7 @@
                         <p class="text-stone text-xs md:text-sm">老字号品牌的视觉策略</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital">
+                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="49" onclick="openProjectModal(49)">
                     <div class="project-number">49</div>
                     <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&h=600&fit=crop" alt="在线教育" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -876,7 +1108,7 @@
                         <p class="text-stone text-xs md:text-sm">教育平台的品牌与UI设计</p>
                     </div>
                 </div>
-                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand">
+                <div class="masonry-item aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="50" onclick="openProjectModal(50)">
                     <div class="project-number">50</div>
                     <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop" alt="东方神韵" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
@@ -1002,7 +1234,7 @@
                         薛志超对品牌的理解远超一般设计师。他不仅创造了美丽的视觉，更深入理解了我们的商业目标，设计出的品牌系统完美契合市场定位。
                     </p>
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">王</div>
+                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">张</div>
                         <div>
                             <div class="text-parchment text-sm">王倩</div>
                             <div class="text-stone text-xs">华为 河南 </div>
@@ -1015,7 +1247,7 @@
                         与薛志超合作是一次愉快的体验。他的专业度和对细节的把控令人印象深刻，最终交付的品牌手册成为团队日常工作的核心参考。
                     </p>
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">刘</div>
+                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">李</div>
                         <div>
                             <div class="text-parchment text-sm">刘飞</div>
                             <div class="text-stone text-xs">荣耀 品牌总监</div>
@@ -1028,7 +1260,7 @@
                         罗格朗中国的品牌设计完美诠释了品牌理念。薛志超将东方美学与现代设计巧妙融合，让品牌在竞争激烈的咖啡市场中脱颖而出。
                     </p>
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">荆</div>
+                        <div class="w-10 h-10 rounded-full bg-ochre/20 flex items-center justify-center text-ochre text-sm font-medium">王</div>
                         <div>
                             <div class="text-parchment text-sm">荆雨涵</div>
                             <div class="text-stone text-xs">罗格朗·中国 </div>
@@ -1108,14 +1340,16 @@
                 .add(() => initHeroAnim());
         function initHeroAnim() {
             const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-            heroTl.to('#hero-label', { opacity: 1, y: 0, duration: 0.8 })
-                  .to('#hero-title', { opacity: 1, y: 0, duration: 1 }, '-=0.5')
-                  .to('#hero-desc', { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
-                  .to('#hero-cta', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
-                  .to('#hero-image', { opacity: 1, scale: 1, duration: 1.2 }, '-=0.8')
-                  .to('#scroll-hint', { opacity: 1, duration: 0.6 }, '-=0.4');
+            heroTl.to('#hero-label', { opacity: 1, y: 0, duration: 1 })
+                  .to('#hero-title', { opacity: 1, y: 0, duration: 1.2 }, '-=0.6')
+                  .to('#hero-deco', { opacity: 1, width: 48, duration: 0.8 }, '-=0.8')
+                  .to('#hero-desc', { opacity: 1, y: 0, duration: 1 }, '-=0.6')
+                  .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8 }, '-=0.5')
+                  .to('#hero-image', { opacity: 1, scale: 1, duration: 1.4 }, '-=1')
+                  .to('#scroll-hint', { opacity: 1, duration: 0.8 }, '-=0.6');
         }
         gsap.set('#hero-label, #hero-title, #hero-desc, #hero-cta', { opacity: 0, y: 30 });
+        gsap.set('#hero-deco', { opacity: 0, width: 0 });
         gsap.set('#hero-image', { opacity: 0, scale: 0.95 });
         gsap.set('#scroll-hint', { opacity: 0 });
         // Nav scroll
@@ -1160,6 +1394,122 @@
                 });
             });
         });
+    
+        // ========== 作品详情模态框 ==========
+        const projects = [{"id": 1, "title": "云栖科技", "category": "brand", "year": "2025", "description": "为AI初创企业打造极简科技感的品牌视觉系统", "client": "云栖科技", "tags": "品牌识别、Logo设计、VI系统", "detail": "从0到1构建品牌视觉体系，以极简几何语言诠释人工智能的理性与温度", "image": "https://images.unsplash.com/photo-1634942537034-2531766767d1?w=1200&h=800&fit=crop"}, {"id": 2, "title": "墨染咖啡", "category": "brand", "year": "2024", "description": "东方美学与现代咖啡文化的视觉融合", "client": "墨染咖啡", "tags": "品牌识别、包装设计、空间视觉", "detail": "将水墨意象与咖啡文化结合，打造具有东方韵味的现代咖啡品牌", "image": "https://images.unsplash.com/photo-1600607686527-6fb886090705?w=1200&h=800&fit=crop"}, {"id": 3, "title": "流光时尚", "category": "strategy", "year": "2024", "description": "高端女装品牌的全案视觉升级", "client": "流光时尚", "tags": "视觉策略、品牌升级、Campaign", "detail": "为成熟女装品牌注入年轻活力，重塑视觉语言以触达新世代消费者", "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=800&fit=crop"}, {"id": 4, "title": "青禾文化", "category": "brand", "year": "2023", "description": "艺术展览机构的视觉识别与空间导视", "client": "青禾文化", "tags": "品牌识别、导视系统、展览设计", "detail": "以当代艺术视角重构文化机构品牌形象，打造沉浸式的空间体验", "image": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=800&fit=crop"}, {"id": 5, "title": "星辰教育", "category": "digital", "year": "2023", "description": "在线教育平台的品牌重塑与UI/UX", "client": "星辰教育", "tags": "数字体验、UI/UX、品牌重塑", "detail": "针对K12教育场景优化用户体验，以温暖的设计语言降低学习焦虑", "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=800&fit=crop"}, {"id": 6, "title": "野境户外", "category": "brand", "year": "2022", "description": "户外装备品牌的野性美学视觉系统", "client": "野境户外", "tags": "品牌识别、包装设计、视觉系统", "detail": "提取自然肌理与户外精神，构建充满力量感的品牌视觉体系", "image": "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1200&h=800&fit=crop"}, {"id": 7, "title": "智链科技", "category": "brand", "year": "2025", "description": "区块链企业的品牌识别与视觉系统", "client": "智链科技", "tags": "品牌识别、视觉系统、数字资产", "detail": "以密码学美学为灵感，打造兼具科技感与信任感的品牌形象", "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=800&fit=crop"}, {"id": 8, "title": "锦绣华服", "category": "strategy", "year": "2024", "description": "传统服饰品牌的现代化视觉升级", "client": "锦绣华服", "tags": "视觉策略、品牌升级、电商视觉", "detail": "在保留传统基因的前提下，以现代设计语言重构老字号品牌形象", "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=800&fit=crop"}, {"id": 9, "title": "云端医疗", "category": "digital", "year": "2023", "description": "互联网医疗平台的品牌与UI设计", "client": "云端医疗", "tags": "数字体验、UI/UX、品牌设计", "detail": "以医疗专业感与人文关怀并重的视觉方案，提升用户信任度", "image": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=800&fit=crop"}, {"id": 10, "title": "山海茶舍", "category": "brand", "year": "2024", "description": "新中式茶饮品牌的视觉识别系统", "client": "山海茶舍", "tags": "品牌识别、包装设计、空间视觉", "detail": "以山海经为灵感源泉，构建充满东方神秘色彩的茶饮品牌世界", "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop"}, {"id": 11, "title": "极光影视", "category": "brand", "year": "2023", "description": "影视制作公司的品牌视觉升级", "client": "极光影视", "tags": "品牌识别、动态视觉、宣传物料", "detail": "以光影变化为视觉核心，打造具有电影质感的品牌识别系统", "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&h=800&fit=crop"}, {"id": 12, "title": "都市丽人", "category": "strategy", "year": "2024", "description": "美妆品牌的全案视觉策略", "client": "都市丽人", "tags": "视觉策略、Campaign、社媒视觉", "detail": "针对都市女性群体，打造精致、自信、有态度的品牌视觉表达", "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&h=800&fit=crop"}, {"id": 13, "title": "智慧校园", "category": "digital", "year": "2023", "description": "教育科技平台的数字化品牌体验", "client": "智慧校园", "tags": "数字体验、UI/UX、品牌设计", "detail": "以简洁高效的设计语言，构建智慧校园生态系统的数字触点", "image": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=800&fit=crop"}, {"id": 14, "title": "禅意空间", "category": "brand", "year": "2022", "description": "室内设计工作室的品牌识别", "client": "禅意空间", "tags": "品牌识别、空间视觉、宣传物料", "detail": "以留白与克制为核心美学，诠释室内设计工作室的东方哲学", "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&h=800&fit=crop"}, {"id": 15, "title": "未来出行", "category": "brand", "year": "2025", "description": "新能源汽车品牌的视觉系统", "client": "未来出行", "tags": "品牌识别、视觉系统、展览设计", "detail": "以未来感与环保理念为双核，构建新能源汽车品牌的视觉语言", "image": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=1200&h=800&fit=crop"}, {"id": 16, "title": "食光记", "category": "strategy", "year": "2024", "description": "餐饮连锁品牌的视觉策略", "client": "食光记", "tags": "视觉策略、品牌升级、门店视觉", "detail": "以时间维度串联美食记忆，打造有温度的餐饮品牌视觉体系", "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&h=800&fit=crop"}, {"id": 17, "title": "健康管家", "category": "digital", "year": "2023", "description": "健康管理App的品牌与UI设计", "client": "健康管家", "tags": "数字体验、UI/UX、品牌设计", "detail": "以数据可视化为核心，打造专业且易用的健康管理数字产品", "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop"}, {"id": 18, "title": "墨韵书画", "category": "brand", "year": "2022", "description": "书画艺术机构的品牌识别", "client": "墨韵书画", "tags": "品牌识别、展览设计、宣传物料", "detail": "以笔墨纸砚为视觉基因，传承并创新传统书画艺术的品牌表达", "image": "https://images.unsplash.com/photo-1513519245088-0e12902e35a6?w=1200&h=800&fit=crop"}, {"id": 19, "title": "星际探索", "category": "brand", "year": "2025", "description": "航天科技企业的品牌视觉", "client": "星际探索", "tags": "品牌识别、视觉系统、展览设计", "detail": "以宇宙探索精神为内核，构建具有宏大叙事感的品牌视觉体系", "image": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1200&h=800&fit=crop"}, {"id": 20, "title": "潮流前线", "category": "strategy", "year": "2024", "description": "潮牌服饰的视觉策略升级", "client": "潮流前线", "tags": "视觉策略、Campaign、社媒视觉", "detail": "以街头文化为底色，融入东方元素，打造独特的潮牌视觉语言", "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1200&h=800&fit=crop"}, {"id": 21, "title": "金融管家", "category": "digital", "year": "2023", "description": "金融科技平台的品牌重塑", "client": "金融管家", "tags": "数字体验、UI/UX、品牌重塑", "detail": "以安全感和专业感为设计核心，重塑金融科技品牌的数字形象", "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=800&fit=crop"}, {"id": 22, "title": "竹韵清风", "category": "brand", "year": "2022", "description": "环保品牌的视觉识别系统", "client": "竹韵清风", "tags": "品牌识别、包装设计、视觉系统", "detail": "以竹为精神图腾，构建清新自然的环保品牌视觉世界", "image": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&h=800&fit=crop"}, {"id": 23, "title": "量子计算", "category": "brand", "year": "2025", "description": "量子科技企业的品牌设计", "client": "量子计算", "tags": "品牌识别、视觉系统、数字资产", "detail": "以量子叠加态为视觉隐喻，打造前沿科技品牌的独特识别", "image": "https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1200&h=800&fit=crop"}, {"id": 24, "title": "味道江湖", "category": "strategy", "year": "2024", "description": "美食品牌的视觉策略", "client": "味道江湖", "tags": "视觉策略、品牌升级、门店视觉", "detail": "以江湖文化为叙事框架，构建有故事感的美食品牌视觉体系", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=800&fit=crop"}, {"id": 25, "title": "智能家居", "category": "digital", "year": "2023", "description": "智能家居平台的品牌与UI", "client": "智能家居", "tags": "数字体验、UI/UX、品牌设计", "detail": "以无感化交互为设计目标，打造智能家居生态的极致用户体验", "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=800&fit=crop"}, {"id": 26, "title": "水墨江南", "category": "brand", "year": "2022", "description": "文旅品牌的视觉识别", "client": "水墨江南", "tags": "品牌识别、文旅视觉、宣传物料", "detail": "以江南水墨为视觉基调，构建诗意盎然的文旅品牌世界", "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop"}, {"id": 27, "title": "生物科技", "category": "brand", "year": "2025", "description": "生物科技企业的品牌视觉", "client": "生物科技", "tags": "品牌识别、视觉系统、展览设计", "detail": "以生命科学为灵感，打造兼具理性与生命力的品牌视觉体系", "image": "https://images.unsplash.com/photo-1497366754035-f201968f4c09?w=1200&h=800&fit=crop"}, {"id": 28, "title": "时尚芭莎", "category": "strategy", "year": "2024", "description": "时尚杂志的视觉策略", "client": "时尚芭莎", "tags": "视觉策略、Campaign、社媒视觉", "detail": "以时尚前沿视角，构建高端杂志品牌的数字化视觉表达", "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=800&fit=crop"}, {"id": 29, "title": "出行无忧", "category": "digital", "year": "2023", "description": "出行平台的品牌重塑", "client": "出行无忧", "tags": "数字体验、UI/UX、品牌重塑", "detail": "以流畅体验为核心，重塑出行平台的品牌与数字产品视觉", "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=800&fit=crop"}, {"id": 30, "title": "禅茶一味", "category": "brand", "year": "2022", "description": "茶文化品牌的视觉识别", "client": "禅茶一味", "tags": "品牌识别、包装设计、空间视觉", "detail": "以禅茶精神为内核，构建宁静致远的茶文化品牌视觉体系", "image": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&h=800&fit=crop"}, {"id": 31, "title": "人工智能", "category": "brand", "year": "2025", "description": "AI企业的品牌视觉系统", "client": "人工智能", "tags": "品牌识别、视觉系统、动态视觉", "detail": "以算法美学为灵感，打造具有未来感的AI品牌视觉语言", "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=800&fit=crop"}, {"id": 32, "title": "美味人生", "category": "strategy", "year": "2024", "description": "食品品牌的视觉策略", "client": "美味人生", "tags": "视觉策略、品牌升级、包装设计", "detail": "以生活美学为切入点，构建有温度的食品品牌视觉体系", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&h=800&fit=crop"}, {"id": 33, "title": "社交达人", "category": "digital", "year": "2023", "description": "社交平台的品牌与UI设计", "client": "社交达人", "tags": "数字体验、UI/UX、品牌设计", "detail": "以年轻活力为设计基调，打造社交平台的沉浸式数字体验", "image": "https://images.unsplash.com/photo-1504384308090-c54be3855833?w=1200&h=800&fit=crop"}, {"id": 34, "title": "山水之间", "category": "brand", "year": "2022", "description": "民宿品牌的视觉识别", "client": "山水之间", "tags": "品牌识别、空间视觉、宣传物料", "detail": "以山水意境为视觉核心，构建诗意栖居的民宿品牌世界", "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop"}, {"id": 35, "title": "清洁能源", "category": "brand", "year": "2025", "description": "新能源企业的品牌设计", "client": "清洁能源", "tags": "品牌识别、视觉系统、展览设计", "detail": "以清洁能源的纯净感为视觉起点，构建可持续未来的品牌愿景", "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop"}, {"id": 36, "title": "潮流生活", "category": "strategy", "year": "2024", "description": "生活方式品牌的视觉策略", "client": "潮流生活", "tags": "视觉策略、Campaign、社媒视觉", "detail": "以多元生活方式为切入点，构建潮流生活品牌的视觉矩阵", "image": "https://images.unsplash.com/photo-1504384308090-c54be3855833?w=1200&h=800&fit=crop"}, {"id": 37, "title": "在线办公", "category": "digital", "year": "2023", "description": "办公平台的品牌重塑", "client": "在线办公", "tags": "数字体验、UI/UX、品牌重塑", "detail": "以高效协作为设计目标，重塑办公平台的品牌与产品视觉", "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop"}, {"id": 38, "title": "古韵新风", "category": "brand", "year": "2022", "description": "文创品牌的视觉识别", "client": "古韵新风", "tags": "品牌识别、包装设计、宣传物料", "detail": "以传统文化为根基，以现代设计为表达，构建文创品牌的独特识别", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&h=800&fit=crop"}, {"id": 39, "title": "深海探索", "category": "brand", "year": "2025", "description": "海洋科技企业的品牌视觉", "client": "深海探索", "tags": "品牌识别、视觉系统、展览设计", "detail": "以深海秘境为视觉灵感，构建探索未知的海洋科技品牌形象", "image": "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&h=800&fit=crop"}, {"id": 40, "title": "美食地图", "category": "strategy", "year": "2024", "description": "美食平台的视觉策略", "client": "美食地图", "tags": "视觉策略、品牌升级、数字视觉", "detail": "以地理人文为叙事线索，构建有地域特色的美食品牌视觉", "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=800&fit=crop"}, {"id": 41, "title": "智慧农业", "category": "digital", "year": "2023", "description": "农业科技平台的品牌与UI", "client": "智慧农业", "tags": "数字体验、UI/UX、品牌设计", "detail": "以科技赋能农业为理念，打造智慧农业平台的数字品牌体验", "image": "https://images.unsplash.com/photo-1497366754035-f201968f4c09?w=1200&h=800&fit=crop"}, {"id": 42, "title": "东方美学", "category": "brand", "year": "2022", "description": "艺术品牌的视觉识别", "client": "东方美学", "tags": "品牌识别、展览设计、宣传物料", "detail": "以东方美学为精神内核，构建具有哲学深度的艺术品牌视觉", "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&h=800&fit=crop"}, {"id": 43, "title": "虚拟现实", "category": "brand", "year": "2025", "description": "VR企业的品牌视觉系统", "client": "虚拟现实", "tags": "品牌识别、视觉系统、动态视觉", "detail": "以虚实交融为视觉概念，打造VR企业的沉浸式品牌识别", "image": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1200&h=800&fit=crop"}, {"id": 44, "title": "品质生活", "category": "strategy", "year": "2024", "description": "家居品牌的视觉策略", "client": "品质生活", "tags": "视觉策略、品牌升级、空间视觉", "detail": "以品质生活为价值主张，构建高端家居品牌的视觉体系", "image": "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=1200&h=800&fit=crop"}, {"id": 45, "title": "在线购物", "category": "digital", "year": "2023", "description": "电商平台的品牌重塑", "client": "在线购物", "tags": "数字体验、UI/UX、品牌重塑", "detail": "以愉悦购物体验为设计目标，重塑电商平台的品牌与产品视觉", "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&h=800&fit=crop"}, {"id": 46, "title": "自然之声", "category": "brand", "year": "2022", "description": "环保组织的视觉识别", "client": "自然之声", "tags": "品牌识别、宣传物料、视觉系统", "detail": "以自然之声为视觉隐喻，构建唤醒环保意识的品牌形象", "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop"}, {"id": 47, "title": "智慧城市", "category": "brand", "year": "2025", "description": "城市科技企业的品牌设计", "client": "智慧城市", "tags": "品牌识别、视觉系统、数字资产", "detail": "以城市脉搏为视觉灵感，构建智慧城市科技的品牌蓝图", "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=800&fit=crop"}, {"id": 48, "title": "味道传承", "category": "strategy", "year": "2024", "description": "老字号品牌的视觉策略", "client": "味道传承", "tags": "视觉策略、品牌升级、包装设计", "detail": "在传承与创新之间寻找平衡，为老字号品牌注入时代活力", "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&h=800&fit=crop"}, {"id": 49, "title": "在线教育", "category": "digital", "year": "2023", "description": "教育平台的品牌与UI设计", "client": "在线教育", "tags": "数字体验、UI/UX、品牌设计", "detail": "以知识传播为使命，打造在线教育平台的优质数字体验", "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop"}, {"id": 50, "title": "东方神韵", "category": "brand", "year": "2022", "description": "文化品牌的视觉识别", "client": "东方神韵", "tags": "品牌识别、宣传物料、视觉系统", "detail": "以东方神韵为视觉灵魂，构建具有文化底蕴的品牌识别体系", "image": "https://images.unsplash.com/photo-1504384308090-c54be3855833?w=1200&h=800&fit=crop"}];
+
+        let currentProjectId = null;
+
+        function openProjectModal(id) {
+            const project = projects.find(p => p.id === id);
+            if (!project) return;
+            currentProjectId = id;
+
+            document.getElementById('modal-img').src = project.image;
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-category').textContent = 
+                project.category === 'brand' ? '品牌识别' : 
+                project.category === 'strategy' ? '视觉策略' : '数字体验';
+            document.getElementById('modal-year').textContent = project.year;
+            document.getElementById('modal-detail').textContent = project.detail;
+            document.getElementById('modal-client').textContent = project.client;
+            document.getElementById('modal-tags').textContent = project.tags;
+            document.getElementById('modal-desc-short').textContent = project.description;
+            document.getElementById('modal-current').textContent = String(id).padStart(2, '0');
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            // 重置图片缩放动画
+            const img = document.getElementById('modal-img');
+            img.style.transform = 'scale(1.05)';
+            setTimeout(() => { img.style.transform = 'scale(1)'; }, 50);
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                document.getElementById('modal-img').src = '';
+            }, 400);
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target === e.currentTarget) closeProjectModal();
+        }
+
+        function nextProject() {
+            const visibleItems = Array.from(document.querySelectorAll('.masonry-item')).filter(item => item.style.display !== 'none');
+            const visibleIds = visibleItems.map(item => parseInt(item.dataset.id)).sort((a,b) => a-b);
+            const currentIdx = visibleIds.indexOf(currentProjectId);
+            const nextIdx = (currentIdx + 1) % visibleIds.length;
+            openProjectModal(visibleIds[nextIdx]);
+        }
+
+        function prevProject() {
+            const visibleItems = Array.from(document.querySelectorAll('.masonry-item')).filter(item => item.style.display !== 'none');
+            const visibleIds = visibleItems.map(item => parseInt(item.dataset.id)).sort((a,b) => a-b);
+            const currentIdx = visibleIds.indexOf(currentProjectId);
+            const prevIdx = (currentIdx - 1 + visibleIds.length) % visibleIds.length;
+            openProjectModal(visibleIds[prevIdx]);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('project-modal').classList.contains('active')) return;
+            if (e.key === 'Escape') closeProjectModal();
+            if (e.key === 'ArrowRight') nextProject();
+            if (e.key === 'ArrowLeft') prevProject();
+        });
+
     </script>
+
+    <!-- 作品详情模态框 -->
+    <div id="project-modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeProjectModal()" aria-label="关闭">&times;</button>
+            <div class="modal-grid">
+                <div class="modal-image-wrap">
+                    <img id="modal-img" src="" alt="" style="transform: scale(1.05);">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-meta-top">
+                        <span id="modal-category" class="modal-category-tag">分类</span>
+                        <span id="modal-year" class="modal-year">2024</span>
+                    </div>
+                    <h2 id="modal-title" class="modal-title text-editorial">作品标题</h2>
+                    <p id="modal-detail" class="modal-detail">作品详细描述...</p>
+                    <div class="modal-divider"></div>
+                    <div class="modal-meta-row">
+                        <div class="modal-meta-item">
+                            <span class="modal-meta-label">客户</span>
+                            <span id="modal-client" class="modal-meta-value">客户名称</span>
+                        </div>
+                        <div class="modal-meta-item">
+                            <span class="modal-meta-label">服务范围</span>
+                            <span id="modal-tags" class="modal-meta-value">标签</span>
+                        </div>
+                        <div class="modal-meta-item">
+                            <span class="modal-meta-label">项目描述</span>
+                            <span id="modal-desc-short" class="modal-meta-value">简短描述</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-nav">
+                <button class="modal-nav-btn" onclick="prevProject()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+                    <span>上一个项目</span>
+                </button>
+                <div class="modal-counter"><span id="modal-current">01</span> / 50</div>
+                <button class="modal-nav-btn" onclick="nextProject()">
+                    <span>下一个项目</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
