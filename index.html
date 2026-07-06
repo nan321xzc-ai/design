@@ -295,7 +295,8 @@
         .modal-image-wrap img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: #0c0c0c;
             display: block;
             transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -413,6 +414,14 @@
             .modal-nav { padding: 16px 24px; }
         }
 
+        .masonry-item[data-id="1"] {
+            aspect-ratio: auto !important;
+            height: auto;
+        }
+        .masonry-item[data-id="1"] img {
+            height: auto;
+            filter: saturate(0.85) contrast(1.05) brightness(0.95);
+        }
     </style>
 </head>
 <body class="noise">
@@ -455,7 +464,7 @@
                     </h1>
                     <div class="hero-deco-line opacity-0" id="hero-deco"></div>
                     <p class="hero-desc mb-12 opacity-0" id="hero-desc">
-                        我是薛志超，90 后品牌视觉设计师，<br>
+                        我是薛志超，90 后品牌视觉设计师。<br>
                         深耕品牌设计与活动视觉落地，服务华为、荣耀、三星、东风日产、保利地产等头部品牌。<br>
                         累计落地 1000+ 商业项目，专注于品牌识别系统、视觉策略与全场景落地。
                     </p>
@@ -569,7 +578,7 @@
 
             <!-- 瀑布流网格 -->
             <div class="masonry-grid" id="works-grid">
-                <div class="masonry-item aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="1" onclick="openProjectModal(1)">
+                <div class="masonry-item mt-0 gsap-project" data-category="brand" data-id="1" style="aspect-ratio: 1920/1123;" onclick="openProjectModal(1)">
                     <div class="project-number">01</div>
                     <img src="project-01.jpg" alt="UIOT超级智慧家 · GEO合作战略发布会" class="w-full h-full object-cover" loading="lazy">
                     <div class="overlay-v2"></div>
