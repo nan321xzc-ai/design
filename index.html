@@ -9,9 +9,6 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://db.onlinewebfonts.com">
     <link href="https://db.onlinewebfonts.com/c/2bf40ab72ea4897a3fd9b6e48b233a19?family=Garamond" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -22,8 +19,9 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Geist"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        sans: ['"Microsoft YaHei"', '"微软雅黑"', 'PingFang SC', 'Hiragino Sans GB', 'Heiti SC', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                         garamond: ['"Garamond"', '"Times New Roman"', 'serif'],
+                        yahei: ['"Microsoft YaHei"', '"微软雅黑"', 'PingFang SC', 'sans-serif'],
                     },
                     colors: {
                         ink: '#0a0a0a',
@@ -44,7 +42,7 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: "Microsoft YaHei", "微软雅黑", "PingFang SC", "Hiragino Sans GB", "Heiti SC", -apple-system, BlinkMacSystemFont, sans-serif;
             background: #010101;
             color: #f5f0e8;
             overflow-x: hidden;
@@ -125,7 +123,7 @@
 
         /* ===== HERO ===== */
         .hero-title { 
-            font-family: 'Garamond', 'Times New Roman', serif;
+            font-family: "Microsoft YaHei", "微软雅黑", "Garamond", "Times New Roman", serif;
             font-size: clamp(2.8rem, 7vw, 6.5rem); 
             line-height: 1.08; 
             letter-spacing: -0.02em; 
@@ -202,7 +200,7 @@
 
         /* ===== QUOTE ===== */
         .quote-mark { 
-            font-family: 'Garamond', serif; 
+            font-family: "Garamond", "Times New Roman", serif; 
             font-size: 8rem; line-height: 1; 
             color: rgba(196, 149, 106, 0.1); 
             position: absolute; top: -1.5rem; left: -0.5rem; 
@@ -254,7 +252,7 @@
             font-size: 0.65rem; color: rgba(196, 149, 106, 0.5);
             letter-spacing: 0.15em; opacity: 0;
             transition: opacity 0.4s ease;
-            font-family: 'Geist', sans-serif;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
             z-index: 2;
         }
         .masonry-item:hover .border-glow-inner .project-number { opacity: 1; }
@@ -287,7 +285,7 @@
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             background: transparent;
-            font-family: 'Geist', sans-serif;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
             letter-spacing: 0.05em;
         }
         .filter-btn:hover, .filter-btn.active {
@@ -352,7 +350,7 @@
         }
         .modal-year { font-size: 0.7rem; color: #8a8580; letter-spacing: 0.1em; }
         .modal-title {
-            font-family: 'Garamond', 'Times New Roman', serif;
+            font-family: "Microsoft YaHei", "微软雅黑", "Garamond", "Times New Roman", serif;
             font-size: 2.4rem; font-weight: 400; color: #f5f0e8;
             line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em;
         }
@@ -375,7 +373,8 @@
         .modal-nav-btn {
             display: flex; align-items: center; gap: 8px;
             color: #8a8580; font-size: 0.75rem; cursor: pointer;
-            transition: color 0.3s ease; background: none; border: none; font-family: inherit;
+            transition: color 0.3s ease; background: none; border: none;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
             letter-spacing: 0.05em;
         }
         .modal-nav-btn:hover { color: #c4956a; }
@@ -393,7 +392,7 @@
 
         /* ===== EDITORIAL TEXT ===== */
         .text-editorial {
-            font-family: 'Garamond', 'Times New Roman', serif;
+            font-family: "Microsoft YaHei", "微软雅黑", "Garamond", "Times New Roman", serif;
             font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
         }
         .text-editorial em { font-style: italic; color: #c4956a; }
@@ -620,8 +619,306 @@
             z-index: 1;
             border-radius: inherit;
         }
-    </style>
-<base target="_blank">
+
+        /* ===== NAV LINK UNDERLINE ANIMATION ===== */
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #c4956a;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ===== COUNT UP ANIMATION ===== */
+        @keyframes count-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== BLUR UP LAZY LOAD ===== */
+        .blur-up {
+            filter: blur(20px);
+            transition: filter 0.8s ease;
+        }
+        .blur-up.lazyloaded {
+            filter: blur(0);
+        }
+
+        /* ===== HERO VIDEO BACKGROUND ===== */
+        .hero-video-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+        }
+
+        /* ===== FLOATING SOCIAL SIDEBAR ===== */
+        .floating-social {
+            position: fixed;
+            left: 2rem;
+            bottom: 2rem;
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .floating-social.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .floating-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 240, 232, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(245, 240, 232, 0.4);
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        .floating-social a:hover {
+            border-color: #c4956a;
+            color: #c4956a;
+            transform: translateY(-2px);
+        }
+        .floating-social::before {
+            content: '';
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(196, 149, 106, 0.3), transparent);
+            margin: 0 auto;
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            right: 2rem;
+            bottom: 2rem;
+            z-index: 40;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(245, 240, 232, 0.1);
+            color: #f5f0e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            background: #c4956a;
+            color: #010101;
+            border-color: #c4956a;
+        }
+
+        /* ===== SERVICE ACCORDION ===== */
+        .service-accordion {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .service-accordion.open {
+            max-height: 300px;
+        }
+        .service-preview {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+        .service-item:hover .service-preview {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .service-preview img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            filter: saturate(0.6);
+            transition: filter 0.3s ease;
+        }
+        .service-preview img:hover {
+            filter: saturate(1);
+        }
+
+        /* ===== CLIENT LOGO STRIP ===== */
+        .client-strip {
+            display: flex;
+            gap: 3rem;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none;
+        }
+        .client-strip::-webkit-scrollbar { display: none; }
+        .client-logo {
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            color: rgba(245, 240, 232, 0.15);
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            transition: color 0.3s ease;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        .client-logo:hover {
+            color: rgba(196, 149, 106, 0.6);
+        }
+
+        /* ===== PROCESS TIMELINE ===== */
+        .process-step {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            border-left: 1px solid rgba(245, 240, 232, 0.06);
+        }
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: -3px;
+            top: 0;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #c4956a;
+        }
+        .process-step:last-child {
+            border-left: none;
+        }
+
+        /* ===== HERO PARALLAX ===== */
+        .hero-parallax {
+            will-change: transform;
+        }
+
+        /* ===== NAV SHOW/HIDE ON SCROLL ===== */
+        .nav-hidden {
+            transform: translateY(-100%);
+        }
+        .nav-visible {
+            transform: translateY(0);
+        }
+    
+        /* ===== SHINY TEXT EFFECT (ReactBits 风格) ===== */
+        .shiny-text-line {
+            position: relative;
+            color: rgba(245, 240, 232, 0.25);
+            background: linear-gradient(
+                120deg,
+                rgba(245, 240, 232, 0.25) 25%,
+                rgba(196, 149, 106, 0.95) 40%,
+                rgba(245, 240, 232, 1) 50%,
+                rgba(196, 149, 106, 0.95) 60%,
+                rgba(245, 240, 232, 0.25) 75%
+            );
+            background-size: 250% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine-sweep 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 60px rgba(196, 149, 106, 0.12));
+        }
+
+        .shiny-text-line:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes shine-sweep {
+            0% { background-position: 100% 0; }
+            35% { background-position: -100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        /* 增强版 hero-title 光晕 */
+        .hero-title {
+            position: relative;
+        }
+
+        .hero-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 140%;
+            background: radial-gradient(ellipse at center, rgba(196, 149, 106, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .hero-title.visible::before {
+            opacity: 1;
+        }
+
+        /* 逐字动画增强 */
+        .stagger-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                        color 0.5s ease,
+                        text-shadow 0.5s ease;
+        }
+
+        .stagger-char.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 关键字符高亮 */
+        .stagger-char.visible.highlight-char {
+            color: #c4956a;
+            text-shadow: 0 0 30px rgba(196, 149, 106, 0.35);
+        }
+
+        /* 悬停时暂停光泽动画 */
+        .hero-title:hover .shiny-text-line {
+            animation-play-state: paused;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .shiny-text-line {
+                animation-duration: 4s;
+                filter: drop-shadow(0 0 30px rgba(196, 149, 106, 0.08));
+            }
+        }
+</style>
 </head>
 <body class="noise">
 
@@ -637,15 +934,15 @@
     </div>
 
     <!-- ===== NAVIGATION ===== -->
-    <nav class="fixed top-0 left-0 w-full z-50 nav-glass border-b border-white/[0.04]">
+    <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 nav-glass border-b border-white/[0.04] transition-transform duration-500 nav-visible">
         <div class="max-w-[1400px] mx-auto px-6 md:px-12">
             <div class="flex items-center justify-between h-20">
                 <a href="#" class="text-white font-light tracking-[0.25em] md:tracking-[0.3em] text-xs uppercase hover:text-ochre transition-colors duration-300">薛志超</a>
                 <div class="hidden md:flex items-center gap-10">
-                    <a href="#about" class="text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">关于</a>
-                    <a href="#works" class="text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">作品</a>
-                    <a href="#services" class="text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">服务</a>
-                    <a href="#contact" class="text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">联系</a>
+                    <a href="#about" class="nav-link text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">关于</a>
+                    <a href="#works" class="nav-link text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">作品</a>
+                    <a href="#services" class="nav-link text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">服务</a>
+                    <a href="#contact" class="nav-link text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 font-light">联系</a>
                 </div>
                 <button class="md:hidden text-white/80 p-2" id="menuToggle" aria-label="菜单">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
@@ -669,17 +966,40 @@
         <a href="#contact" class="text-2xl text-ochre mobile-link font-light tracking-[0.15em] uppercase">联系</a>
     </div>
 
-    
-    <!-- ===== HERO SECTION - New Layout ===== -->
-    <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-ink pt-20">
-        <!-- Background gradient orb -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full opacity-30 pointer-events-none" 
-             style="background: radial-gradient(circle, rgba(196,149,106,0.25) 0%, rgba(196,149,106,0.08) 40%, transparent 70%);">
-        </div>
+    <!-- ===== FLOATING SOCIAL SIDEBAR ===== -->
+    <div class="floating-social hidden lg:flex" id="floatingSocial">
+        <a href="#" aria-label="Behance">Be</a>
+        <a href="#" aria-label="Dribbble">Dr</a>
+        <a href="#" aria-label="LinkedIn">In</a>
+    </div>
 
-        <!-- Secondary orb -->
-        <div class="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full opacity-20 pointer-events-none"
-             style="background: radial-gradient(circle, rgba(196,149,106,0.2) 0%, transparent 60%);">
+    <!-- ===== BACK TO TOP ===== -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="回到顶部">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <!-- ===== HERO SECTION - Cinematic Video Background ===== -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden bg-ink pt-20">
+        <!-- Video Background -->
+        <video 
+            class="hero-video-bg" 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            poster="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1920&h=1080&fit=crop"
+        >
+            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4" type="video/mp4">
+        </video>
+
+        <!-- Video Overlay -->
+        <div class="video-overlay"></div>
+
+        <!-- Background gradient orb (fallback/enhancement) -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] md:w-[800px] md:h-[800px] rounded-full opacity-20 pointer-events-none" 
+             style="background: radial-gradient(circle, rgba(196,149,106,0.2) 0%, rgba(196,149,106,0.05) 40%, transparent 70%);">
         </div>
 
         <div class="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 w-full">
@@ -688,11 +1008,11 @@
                 <!-- Left Stats -->
                 <div class="col-span-12 md:col-span-2 flex md:flex-col gap-8 md:gap-12 order-2 md:order-1">
                     <div class="gsap-stat-left">
-                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight">10+</div>
+                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight count-up" data-target="10">0+</div>
                         <div class="text-stone text-xs mt-1 tracking-wide">年设计经验</div>
                     </div>
                     <div class="gsap-stat-left">
-                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight">120+</div>
+                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight count-up" data-target="120">0+</div>
                         <div class="text-stone text-xs mt-1 tracking-wide">完成项目</div>
                     </div>
                 </div>
@@ -702,8 +1022,8 @@
                     <div class="hero-label mb-8 opacity-0" id="hero-label">Brand Designer & Visual Strategist</div>
 
                     <h1 class="hero-title mb-4 opacity-0" id="hero-title">
-                        <span class="block" id="hero-line1"></span>
-                        <span class="block mt-2 md:mt-4" id="hero-line2"></span>
+                        <span class="block shiny-text-line" id="hero-line1"></span>
+                        <span class="block mt-2 md:mt-4 shiny-text-line" id="hero-line2"></span>
                     </h1>
 
                     <div class="hero-deco-line mx-auto opacity-0" id="hero-deco"></div>
@@ -732,11 +1052,11 @@
                 <!-- Right Stats -->
                 <div class="col-span-12 md:col-span-2 flex md:flex-col gap-8 md:gap-12 order-3 md:text-right">
                     <div class="gsap-stat-right">
-                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight">50+</div>
+                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight count-up" data-target="50">0+</div>
                         <div class="text-stone text-xs mt-1 tracking-wide">合作品牌</div>
                     </div>
                     <div class="gsap-stat-right">
-                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight">1k+</div>
+                        <div class="text-parchment text-2xl md:text-3xl font-light tracking-tight count-up" data-target="1000">0+</div>
                         <div class="text-stone text-xs mt-1 tracking-wide">落地项目</div>
                     </div>
                 </div>
@@ -771,7 +1091,34 @@
             </div>
         </div>
     </div>
-<!-- ===== MARQUEE ===== -->
+
+    <!-- ===== CLIENT LOGO STRIP ===== -->
+    <div class="bg-ink-deep border-b border-white/[0.04] py-8 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto px-6 md:px-12">
+            <div class="text-center mb-6">
+                <span class="text-stone text-xs uppercase tracking-[0.2em] font-light">信赖伙伴</span>
+            </div>
+            <div class="client-strip justify-center">
+                <span class="client-logo">华为</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">荣耀</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">三星</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">东风日产</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">保利地产</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">中海地产</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">金科</span>
+                <span class="client-logo">·</span>
+                <span class="client-logo">罗格朗</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MARQUEE ===== -->
     <div class="py-6 border-y border-white/[0.04] overflow-hidden bg-ink-deep">
         <div class="marquee-track whitespace-nowrap">
             <span class="text-white/[0.04] text-[7vw] font-garamond font-light tracking-tight mx-8">BRAND IDENTITY</span>
@@ -824,15 +1171,15 @@
                     </div>
                     <div class="grid grid-cols-3 gap-8 mt-20 pt-16 border-t border-white/[0.04]">
                         <div class="gsap-stat text-center lg:text-left">
-                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2">10+</div>
+                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2 count-up" data-target="10">0+</div>
                             <div class="text-stone text-xs uppercase tracking-[0.15em] font-light">年设计经验</div>
                         </div>
                         <div class="gsap-stat text-center lg:text-left">
-                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2">120+</div>
+                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2 count-up" data-target="120">0+</div>
                             <div class="text-stone text-xs uppercase tracking-[0.15em] font-light">完成项目</div>
                         </div>
                         <div class="gsap-stat text-center lg:text-left">
-                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2">50+</div>
+                            <div class="font-garamond text-ochre text-4xl md:text-5xl mb-2 count-up" data-target="50">0+</div>
                             <div class="text-stone text-xs uppercase tracking-[0.15em] font-light">合作品牌</div>
                         </div>
                     </div>
@@ -842,7 +1189,6 @@
     </section>
 
     <div class="divider max-w-[1400px] mx-auto"></div>
-
     <!-- ===== WORKS SECTION ===== -->
     <section id="works" class="py-32 md:py-44 bg-ink-deep">
         <div class="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -869,705 +1215,115 @@
                 <div class="masonry-item border-glow-card aspect-[1920/1123] mt-0 gsap-project" data-category="brand" data-id="1" onclick="openProjectModal(1)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">01</div>
-                    <img src="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=800&h=600&fit=crop" alt="UIOT超级智慧家 · GEO合作战略发布会" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2026.06</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">UIOT超级智慧家 · GEO合作战略发布会</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">全屋智能行业 AI 数字化获客新模式主视觉设计</p>
+                        <div class="project-number">01</div>
+                        <img src="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=800&h=600&fit=crop" alt="UIOT超级智慧家 · GEO合作战略发布会" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2026.06</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">UIOT超级智慧家 · GEO合作战略发布会</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">全屋智能行业 AI 数字化获客新模式主视觉设计</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="2" onclick="openProjectModal(2)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">02</div>
-                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop" alt="墨染咖啡" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">墨染咖啡</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">东方美学与现代咖啡文化的视觉融合</p>
+                        <div class="project-number">02</div>
+                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&h=600&fit=crop" alt="墨染咖啡" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2024</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">墨染咖啡</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">东方美学与现代咖啡文化的视觉融合</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="strategy" data-id="3" onclick="openProjectModal(3)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">03</div>
-                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=600&fit=crop" alt="流光时尚" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">流光时尚</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">高端女装品牌的全案视觉升级</p>
+                        <div class="project-number">03</div>
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=600&fit=crop" alt="流光时尚" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">流光时尚</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">高端女装品牌的全案视觉升级</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="4" onclick="openProjectModal(4)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">04</div>
-                    <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop" alt="青禾文化" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">青禾文化</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">艺术展览机构的视觉识别与空间导视</p>
+                        <div class="project-number">04</div>
+                        <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop" alt="青禾文化" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2023</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">青禾文化</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">艺术展览机构的视觉识别与空间导视</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="5" onclick="openProjectModal(5)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">05</div>
-                    <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop" alt="星辰教育" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">星辰教育</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">在线教育平台的品牌重塑与UI/UX</p>
+                        <div class="project-number">05</div>
+                        <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop" alt="星辰教育" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">星辰教育</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">在线教育平台的品牌重塑与UI/UX</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="6" onclick="openProjectModal(6)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">06</div>
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="野境户外" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">野境户外</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">户外装备品牌的野性美学视觉系统</p>
+                        <div class="project-number">06</div>
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop" alt="野境户外" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">野境户外</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">户外装备品牌的野性美学视觉系统</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="7" onclick="openProjectModal(7)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">07</div>
-                    <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=600&fit=crop" alt="智链科技" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智链科技</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">区块链企业的品牌识别与视觉系统</p>
+                        <div class="project-number">07</div>
+                        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=600&fit=crop" alt="智链科技" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智链科技</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">区块链企业的品牌识别与视觉系统</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
                 <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="8" onclick="openProjectModal(8)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
                     <span class="edge-light"></span>
                     <div class="border-glow-inner">
-                    <div class="project-number">08</div>
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=600&fit=crop" alt="锦绣华服" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">锦绣华服</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">传统服饰品牌的现代化视觉升级</p>
+                        <div class="project-number">08</div>
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&h=600&fit=crop" alt="锦绣华服" class="w-full h-full object-cover" loading="lazy">
+                        <div class="overlay-v2"></div>
+                        <div class="view-circle">查看</div>
+                        <div class="meta-v2">
+                            <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
+                            <h3 class="text-parchment text-lg md:text-xl font-light mb-1">锦绣华服</h3>
+                            <p class="text-stone text-xs md:text-sm font-light">传统服饰品牌的现代化视觉升级</p>
+                        </div>
                     </div>
                 </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="9" onclick="openProjectModal(9)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">09</div>
-                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=600&fit=crop" alt="云端医疗" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">云端医疗</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">互联网医疗平台的品牌与UI设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="10" onclick="openProjectModal(10)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">10</div>
-                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&h=600&fit=crop" alt="山海茶舍" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">山海茶舍</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">新中式茶饮品牌的视觉识别系统</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="11" onclick="openProjectModal(11)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">11</div>
-                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=600&fit=crop" alt="极光影视" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">极光影视</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">影视制作公司的品牌视觉升级</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="12" onclick="openProjectModal(12)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">12</div>
-                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800&h=600&fit=crop" alt="都市丽人" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">都市丽人</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">美妆品牌的全案视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="13" onclick="openProjectModal(13)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">13</div>
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop" alt="智慧校园" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智慧校园</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">教育科技平台的数字化品牌体验</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="14" onclick="openProjectModal(14)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">14</div>
-                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=600&fit=crop" alt="禅意空间" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">禅意空间</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">室内设计工作室的品牌识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="15" onclick="openProjectModal(15)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">15</div>
-                    <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=800&h=600&fit=crop" alt="未来出行" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">未来出行</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">新能源汽车品牌的视觉系统</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="16" onclick="openProjectModal(16)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">16</div>
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop" alt="食光记" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">食光记</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">餐饮连锁品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="17" onclick="openProjectModal(17)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">17</div>
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop" alt="健康管家" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">健康管家</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">健康管理App的品牌与UI设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="18" onclick="openProjectModal(18)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">18</div>
-                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop" alt="墨韵书画" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">墨韵书画</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">书画艺术机构的品牌识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="19" onclick="openProjectModal(19)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">19</div>
-                    <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&h=600&fit=crop" alt="星际探索" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">星际探索</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">航天科技企业的品牌视觉</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="20" onclick="openProjectModal(20)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">20</div>
-                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&h=600&fit=crop" alt="潮流前线" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">潮流前线</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">潮牌服饰的视觉策略升级</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="21" onclick="openProjectModal(21)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">21</div>
-                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=600&fit=crop" alt="金融管家" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">金融管家</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">金融科技平台的品牌重塑</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="22" onclick="openProjectModal(22)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">22</div>
-                    <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=800&h=600&fit=crop" alt="竹韵清风" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">竹韵清风</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">环保品牌的视觉识别系统</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="23" onclick="openProjectModal(23)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">23</div>
-                    <img src="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=800&h=600&fit=crop" alt="量子计算" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">量子计算</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">量子科技企业的品牌设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="24" onclick="openProjectModal(24)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">24</div>
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop" alt="味道江湖" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">味道江湖</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">美食品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="25" onclick="openProjectModal(25)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">25</div>
-                    <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=800&h=600&fit=crop" alt="智能家居" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智能家居</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">智能家居平台的品牌与UI</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="26" onclick="openProjectModal(26)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">26</div>
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop" alt="水墨江南" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">水墨江南</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">文旅品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="27" onclick="openProjectModal(27)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">27</div>
-                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&h=600&fit=crop" alt="生物科技" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">生物科技</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">生物科技企业的品牌视觉</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="28" onclick="openProjectModal(28)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">28</div>
-                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=800&h=600&fit=crop" alt="时尚芭莎" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">时尚芭莎</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">时尚杂志的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="29" onclick="openProjectModal(29)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">29</div>
-                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop" alt="出行无忧" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">出行无忧</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">出行平台的品牌重塑</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="30" onclick="openProjectModal(30)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">30</div>
-                    <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=800&h=600&fit=crop" alt="禅茶一味" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">禅茶一味</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">茶文化品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="31" onclick="openProjectModal(31)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">31</div>
-                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop" alt="人工智能" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">人工智能</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">AI企业的品牌视觉系统</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="32" onclick="openProjectModal(32)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">32</div>
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop" alt="美味人生" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">美味人生</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">食品品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="33" onclick="openProjectModal(33)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">33</div>
-                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop" alt="社交达人" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">社交达人</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">社交平台的品牌与UI设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="34" onclick="openProjectModal(34)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">34</div>
-                    <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop" alt="山水之间" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">山水之间</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">民宿品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="35" onclick="openProjectModal(35)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">35</div>
-                    <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=800&h=600&fit=crop" alt="清洁能源" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">清洁能源</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">新能源企业的品牌设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="36" onclick="openProjectModal(36)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">36</div>
-                    <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&h=600&fit=crop" alt="潮流生活" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">潮流生活</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">生活方式品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="37" onclick="openProjectModal(37)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">37</div>
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop" alt="在线办公" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">在线办公</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">办公平台的品牌重塑</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="38" onclick="openProjectModal(38)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">38</div>
-                    <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop" alt="古韵新风" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">古韵新风</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">文创品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="brand" data-id="39" onclick="openProjectModal(39)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">39</div>
-                    <img src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&h=600&fit=crop" alt="深海探索" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">深海探索</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">海洋科技企业的品牌视觉</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="40" onclick="openProjectModal(40)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">40</div>
-                    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=600&fit=crop" alt="美食地图" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">美食地图</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">美食平台的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="digital" data-id="41" onclick="openProjectModal(41)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">41</div>
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&h=600&fit=crop" alt="智慧农业" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智慧农业</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">农业科技平台的品牌与UI</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="42" onclick="openProjectModal(42)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">42</div>
-                    <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&h=600&fit=crop" alt="东方美学" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">东方美学</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">艺术品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="brand" data-id="43" onclick="openProjectModal(43)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">43</div>
-                    <img src="https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=800&h=600&fit=crop" alt="虚拟现实" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">虚拟现实</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">VR企业的品牌视觉系统</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="44" onclick="openProjectModal(44)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">44</div>
-                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&h=600&fit=crop" alt="品质生活" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">品质生活</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">家居品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-0 gsap-project" data-category="digital" data-id="45" onclick="openProjectModal(45)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">45</div>
-                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop" alt="在线购物" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">在线购物</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">电商平台的品牌重塑</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="46" onclick="openProjectModal(46)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">46</div>
-                    <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&h=600&fit=crop" alt="自然之声" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">自然之声</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">环保组织的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-0 gsap-project" data-category="brand" data-id="47" onclick="openProjectModal(47)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">47</div>
-                    <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop" alt="智慧城市" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2025</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">智慧城市</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">城市科技企业的品牌设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[1/1] mt-8 md:mt-16 gsap-project" data-category="strategy" data-id="48" onclick="openProjectModal(48)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">48</div>
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&h=600&fit=crop" alt="味道传承" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">视觉策略 / 2024</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">味道传承</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">老字号品牌的视觉策略</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[4/3] mt-0 gsap-project" data-category="digital" data-id="49" onclick="openProjectModal(49)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">49</div>
-                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop" alt="在线教育" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">数字体验 / 2023</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">在线教育</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">教育平台的品牌与UI设计</p>
-                    </div>
-                </div>
-                    </div>
-                <div class="masonry-item border-glow-card aspect-[3/4] mt-8 md:mt-16 gsap-project" data-category="brand" data-id="50" onclick="openProjectModal(50)" style="--card-bg: #0a0a0a; --edge-sensitivity: 25; --glow-padding: 20px; --border-radius: 6px; --cone-spread: 20; --fill-opacity: 0.35;">
-                    <span class="edge-light"></span>
-                    <div class="border-glow-inner">
-                    <div class="project-number">50</div>
-                    <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&h=600&fit=crop" alt="东方神韵" class="w-full h-full object-cover" loading="lazy">
-                    <div class="overlay-v2"></div>
-                    <div class="view-circle">查看</div>
-                    <div class="meta-v2">
-                        <span class="text-ochre text-[10px] uppercase tracking-[0.2em] block mb-2">品牌识别 / 2022</span>
-                        <h3 class="text-parchment text-lg md:text-xl font-light mb-1">东方神韵</h3>
-                        <p class="text-stone text-xs md:text-sm font-light">文化品牌的视觉识别</p>
-                    </div>
-                </div>
-                    </div>
-
-
             </div>
 
             <div class="mt-20 text-center">
@@ -1595,73 +1351,103 @@
                     </p>
                 </div>
                 <div class="lg:col-span-8">
-                    <div class="service-item py-8 group cursor-pointer">
+                    <div class="service-item py-8 group cursor-pointer" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">01</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">品牌识别设计</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">Logo设计、品牌色彩系统、字体规范、品牌手册制定，构建完整的视觉识别体系。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>
                     </div>
-                    <div class="service-item py-8 group cursor-pointer">
+                    <div class="service-item py-8 group cursor-pointer" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">02</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">视觉策略咨询</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">深入分析品牌定位与目标受众，制定差异化的视觉策略方向与创意概念。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>
                     </div>
-                    <div class="service-item py-8 group cursor-pointer">
+                    <div class="service-item py-8 group cursor-pointer" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">03</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">数字体验设计</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">网站、App界面设计，确保数字触点与品牌视觉保持高度一致的用户体验。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>
                     </div>
-                    <div class="service-item py-8 group cursor-pointer">
+                    <div class="service-item py-8 group cursor-pointer" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">04</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">包装与印刷</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">产品包装、宣传物料、印刷品设计，将品牌视觉延伸至实体空间。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>
                     </div>
-                    <div class="service-item py-8 group cursor-pointer">
+                    <div class="service-item py-8 group cursor-pointer" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">05</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">动态视觉</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">品牌动画、社交媒体视觉、动态Logo，让品牌在数字世界更具生命力。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                         </div>
                     </div>
-                    <div class="service-item py-8 group cursor-pointer border-b border-white/[0.04]">
+                    <div class="service-item py-8 group cursor-pointer border-b border-white/[0.04]" onclick="toggleService(this)">
                         <div class="flex items-start justify-between">
-                            <div class="flex gap-8">
+                            <div class="flex gap-8 flex-1">
                                 <span class="text-ochre/30 text-sm font-light font-garamond">06</span>
-                                <div>
+                                <div class="flex-1">
                                     <h3 class="text-parchment text-xl font-light mb-2 group-hover:text-ochre transition-colors duration-300">空间导视</h3>
                                     <p class="text-stone text-sm max-w-md font-light leading-relaxed">商业空间视觉规划、导视系统设计，打造沉浸式的品牌空间体验。</p>
+                                    <div class="service-preview">
+                                        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=120&h=120&fit=crop" alt="案例1">
+                                        <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=120&h=120&fit=crop" alt="案例2">
+                                        <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=120&h=120&fit=crop" alt="案例3">
+                                    </div>
                                 </div>
                             </div>
                             <svg class="service-arrow w-5 h-5 text-ochre mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -1682,7 +1468,7 @@
                 <h2 class="text-editorial text-parchment text-4xl md:text-5xl">他们怎么说</h2>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial">
+                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial hover:border-ochre/20 transition-colors duration-500">
                     <span class="quote-mark">"</span>
                     <p class="text-stone-light leading-[1.9] mb-8 relative z-10 font-light text-[0.95rem]">
                         薛志超对品牌的理解远超一般设计师。他不仅创造了美丽的视觉，更深入理解了我们的商业目标，设计出的品牌系统完美契合市场定位。
@@ -1695,7 +1481,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial">
+                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial hover:border-ochre/20 transition-colors duration-500">
                     <span class="quote-mark">"</span>
                     <p class="text-stone-light leading-[1.9] mb-8 relative z-10 font-light text-[0.95rem]">
                         与薛志超合作是一次愉快的体验。他的专业度和对细节的把控令人印象深刻，最终交付的品牌手册成为团队日常工作的核心参考。
@@ -1708,10 +1494,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial">
+                <div class="relative bg-ink-light border border-white/[0.04] p-10 rounded-lg gsap-testimonial hover:border-ochre/20 transition-colors duration-500">
                     <span class="quote-mark">"</span>
                     <p class="text-stone-light leading-[1.9] mb-8 relative z-10 font-light text-[0.95rem]">
-                        罗格朗中国的品牌设计完美诠释了品牌理念。薛志超将东方美学与现代设计巧妙融合，让品牌在竞争激烈的咖啡市场中脱颖而出。
+                        罗格朗中国的品牌设计完美诠释了品牌理念。薛志超将东方美学与现代设计巧妙融合，让品牌在竞争激烈的智能家居市场中脱颖而出。
                     </p>
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-ochre/15 flex items-center justify-center text-ochre text-sm font-medium font-garamond">荆</div>
@@ -1827,7 +1613,7 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                     <span>上一个项目</span>
                 </button>
-                <div class="modal-counter"><span id="modal-current">01</span> / 50</div>
+                <div class="modal-counter"><span id="modal-current">01</span> / 08</div>
                 <button class="modal-nav-btn" onclick="nextProject()">
                     <span>下一个项目</span>
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -1835,7 +1621,6 @@
             </div>
         </div>
     </div>
-
     <!-- ===== SCRIPTS ===== -->
     <script>
         gsap.registerPlugin(ScrollTrigger);
@@ -1857,27 +1642,78 @@
         createStaggeredText('hero-line1', '从活动视觉');
         createStaggeredText('hero-line2', '到品牌体系');
 
+        // ===== COUNT UP ANIMATION =====
+        function animateCountUp() {
+            const counters = document.querySelectorAll('.count-up');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const start = performance.now();
+
+                function update(currentTime) {
+                    const elapsed = currentTime - start;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = 1 - Math.pow(1 - progress, 3);
+                    const current = Math.floor(easeProgress * target);
+
+                    counter.textContent = current + (target >= 1000 ? '+' : '+');
+
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        counter.textContent = target + (target >= 1000 ? '+' : '+');
+                    }
+                }
+
+                // Use IntersectionObserver to trigger when in view
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            requestAnimationFrame(update);
+                            observer.unobserve(counter);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                observer.observe(counter);
+            });
+        }
+
         // ===== LOADER =====
         const loaderTl = gsap.timeline();
         loaderTl.to('#loader-bar', { scaleX: 1, duration: 1.5, ease: 'power2.inOut' })
                 .to('#loader', { opacity: 0, duration: 0.8, ease: 'power2.inOut', delay: 0.3 })
                 .set('#loader', { display: 'none' })
-                .add(() => initHeroAnim());
+                .add(() => {
+                    initHeroAnim();
+                    animateCountUp();
+                });
 
         function initHeroAnim() {
             const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-            // Reveal staggered characters
+            // Reveal staggered characters with highlight on key chars
+            const highlightChars = ['视', '觉', '牌', '系', '品', '牌'];
             document.querySelectorAll('#hero-line1 .stagger-char, #hero-line2 .stagger-char').forEach((char, i) => {
-                setTimeout(() => char.classList.add('visible'), i * 30);
+                setTimeout(() => {
+                    char.classList.add('visible');
+                    // 为关键字符添加金色高亮
+                    if (highlightChars.includes(char.textContent.trim())) {
+                        char.classList.add('highlight-char');
+                    }
+                }, i * 35);
             });
 
             heroTl.to('#hero-label', { opacity: 1, y: 0, duration: 1 }, 0.3)
                   .to('#hero-title', { opacity: 1, duration: 0.5 }, 0.2)
-                  .add(() => document.getElementById('hero-deco').classList.add('visible'), 0.8)
+                  .add(() => {
+                      document.getElementById('hero-deco').classList.add('visible');
+                      document.getElementById('hero-title').classList.add('visible');
+                  }, 0.8)
                   .to('#hero-desc', { opacity: 1, y: 0, duration: 1 }, 1.0)
                   .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8 }, 1.3)
-                  .to('#scroll-hint', { opacity: 1, duration: 0.8 }, 1.6);
+                  .to('#scroll-hint', { opacity: 1, duration: 0.8 }, 1.6)
+                  .add(() => document.getElementById('floatingSocial').classList.add('visible'), 2.0);
         }
 
         gsap.set('#hero-label, #hero-desc, #hero-cta', { opacity: 0, y: 30 });
@@ -1886,10 +1722,29 @@
 
         // ===== NAV SCROLL EFFECT =====
         let lastScroll = 0;
+        const mainNav = document.getElementById('mainNav');
+        const backToTop = document.getElementById('backToTop');
+
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
             const currentScroll = window.scrollY;
-            nav.style.borderColor = currentScroll > 100 ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)';
+
+            // Nav show/hide
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                mainNav.classList.add('nav-hidden');
+                mainNav.classList.remove('nav-visible');
+            } else {
+                mainNav.classList.remove('nav-hidden');
+                mainNav.classList.add('nav-visible');
+            }
+
+            // Back to top button
+            if (currentScroll > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+
+            mainNav.style.borderColor = currentScroll > 100 ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)';
             lastScroll = currentScroll;
         }, { passive: true });
 
@@ -1916,6 +1771,13 @@
         gsap.from('.gsap-testimonial', { 
             scrollTrigger: { trigger: '#testimonials', start: 'top 75%' }, 
             opacity: 0, y: 40, duration: 0.8, stagger: 0.15, ease: 'power3.out' 
+        });
+
+        // ===== HERO PARALLAX =====
+        gsap.to('#hero-title', {
+            scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+            y: 100,
+            opacity: 0.3
         });
 
         // ===== MOBILE MENU =====
@@ -1954,60 +1816,32 @@
             });
         });
 
-        // ===== PROJECTS DATA =====
-const projects = [
-  {"id": 1, "title": "UIOT超级智慧家 · GEO合作战略发布会", "category": "brand", "year": "2026.06", "description": "全屋智能行业 AI 数字化获客新模式主视觉设计", "client": "超级智慧家（上海）物联网科技有限公司", "tags": "品牌识别、视觉系统、包装设计", "detail": "全屋智能行业 AI 数字化获客新模式主视觉设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1200&h=800&fit=crop"},
-  {"id": 2, "title": "墨染咖啡", "category": "brand", "year": "2024", "description": "东方美学与现代咖啡文化的视觉融合", "client": "墨染咖啡", "tags": "品牌识别、视觉系统、包装设计", "detail": "东方美学与现代咖啡文化的视觉融合。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop"},
-  {"id": 3, "title": "流光时尚", "category": "strategy", "year": "2024", "description": "高端女装品牌的全案视觉升级", "client": "流光时尚", "tags": "视觉策略、品牌升级、Campaign", "detail": "高端女装品牌的全案视觉升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=800&fit=crop"},
-  {"id": 4, "title": "青禾文化", "category": "brand", "year": "2023", "description": "艺术展览机构的视觉识别与空间导视", "client": "青禾文化", "tags": "品牌识别、视觉系统、包装设计", "detail": "艺术展览机构的视觉识别与空间导视。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=1200&h=800&fit=crop"},
-  {"id": 5, "title": "星辰教育", "category": "digital", "year": "2023", "description": "在线教育平台的品牌重塑与UI/UX", "client": "星辰教育", "tags": "数字体验、UI/UX、品牌设计", "detail": "在线教育平台的品牌重塑与UI/UX。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=1200&h=800&fit=crop"},
-  {"id": 6, "title": "野境户外", "category": "brand", "year": "2022", "description": "户外装备品牌的野性美学视觉系统", "client": "野境户外", "tags": "品牌识别、视觉系统、包装设计", "detail": "户外装备品牌的野性美学视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop"},
-  {"id": 7, "title": "智链科技", "category": "brand", "year": "2025", "description": "区块链企业的品牌识别与视觉系统", "client": "智链科技", "tags": "品牌识别、视觉系统、包装设计", "detail": "区块链企业的品牌识别与视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=800&fit=crop"},
-  {"id": 8, "title": "锦绣华服", "category": "strategy", "year": "2024", "description": "传统服饰品牌的现代化视觉升级", "client": "锦绣华服", "tags": "视觉策略、品牌升级、Campaign", "detail": "传统服饰品牌的现代化视觉升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=800&fit=crop"},
-  {"id": 9, "title": "云端医疗", "category": "digital", "year": "2023", "description": "互联网医疗平台的品牌与UI设计", "client": "云端医疗", "tags": "数字体验、UI/UX、品牌设计", "detail": "互联网医疗平台的品牌与UI设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=800&fit=crop"},
-  {"id": 10, "title": "山海茶舍", "category": "brand", "year": "2024", "description": "新中式茶饮品牌的视觉识别系统", "client": "山海茶舍", "tags": "品牌识别、视觉系统、包装设计", "detail": "新中式茶饮品牌的视觉识别系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&h=800&fit=crop"},
-  {"id": 11, "title": "极光影视", "category": "brand", "year": "2023", "description": "影视制作公司的品牌视觉升级", "client": "极光影视", "tags": "品牌识别、视觉系统、包装设计", "detail": "影视制作公司的品牌视觉升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&h=800&fit=crop"},
-  {"id": 12, "title": "都市丽人", "category": "strategy", "year": "2024", "description": "美妆品牌的全案视觉策略", "client": "都市丽人", "tags": "视觉策略、品牌升级、Campaign", "detail": "美妆品牌的全案视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&h=800&fit=crop"},
-  {"id": 13, "title": "智慧校园", "category": "digital", "year": "2023", "description": "教育科技平台的数字化品牌体验", "client": "智慧校园", "tags": "数字体验、UI/UX、品牌设计", "detail": "教育科技平台的数字化品牌体验。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=800&fit=crop"},
-  {"id": 14, "title": "禅意空间", "category": "brand", "year": "2022", "description": "室内设计工作室的品牌识别", "client": "禅意空间", "tags": "品牌识别、视觉系统、包装设计", "detail": "室内设计工作室的品牌识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&h=800&fit=crop"},
-  {"id": 15, "title": "未来出行", "category": "brand", "year": "2025", "description": "新能源汽车品牌的视觉系统", "client": "未来出行", "tags": "品牌识别、视觉系统、包装设计", "detail": "新能源汽车品牌的视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=1200&h=800&fit=crop"},
-  {"id": 16, "title": "食光记", "category": "strategy", "year": "2024", "description": "餐饮连锁品牌的视觉策略", "client": "食光记", "tags": "视觉策略、品牌升级、Campaign", "detail": "餐饮连锁品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=800&fit=crop"},
-  {"id": 17, "title": "健康管家", "category": "digital", "year": "2023", "description": "健康管理App的品牌与UI设计", "client": "健康管家", "tags": "数字体验、UI/UX、品牌设计", "detail": "健康管理App的品牌与UI设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop"},
-  {"id": 18, "title": "墨韵书画", "category": "brand", "year": "2022", "description": "书画艺术机构的品牌识别", "client": "墨韵书画", "tags": "品牌识别、视觉系统、包装设计", "detail": "书画艺术机构的品牌识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1200&h=800&fit=crop"},
-  {"id": 19, "title": "星际探索", "category": "brand", "year": "2025", "description": "航天科技企业的品牌视觉", "client": "星际探索", "tags": "品牌识别、视觉系统、包装设计", "detail": "航天科技企业的品牌视觉。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=1200&h=800&fit=crop"},
-  {"id": 20, "title": "潮流前线", "category": "strategy", "year": "2024", "description": "潮牌服饰的视觉策略升级", "client": "潮流前线", "tags": "视觉策略、品牌升级、Campaign", "detail": "潮牌服饰的视觉策略升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=1200&h=800&fit=crop"},
-  {"id": 21, "title": "金融管家", "category": "digital", "year": "2023", "description": "金融科技平台的品牌重塑", "client": "金融管家", "tags": "数字体验、UI/UX、品牌设计", "detail": "金融科技平台的品牌重塑。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1200&h=800&fit=crop"},
-  {"id": 22, "title": "竹韵清风", "category": "brand", "year": "2022", "description": "环保品牌的视觉识别系统", "client": "竹韵清风", "tags": "品牌识别、视觉系统、包装设计", "detail": "环保品牌的视觉识别系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1200&h=800&fit=crop"},
-  {"id": 23, "title": "量子计算", "category": "brand", "year": "2025", "description": "量子科技企业的品牌设计", "client": "量子计算", "tags": "品牌识别、视觉系统、包装设计", "detail": "量子科技企业的品牌设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1200&h=800&fit=crop"},
-  {"id": 24, "title": "味道江湖", "category": "strategy", "year": "2024", "description": "美食品牌的视觉策略", "client": "味道江湖", "tags": "视觉策略、品牌升级、Campaign", "detail": "美食品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=800&fit=crop"},
-  {"id": 25, "title": "智能家居", "category": "digital", "year": "2023", "description": "智能家居平台的品牌与UI", "client": "智能家居", "tags": "数字体验、UI/UX、品牌设计", "detail": "智能家居平台的品牌与UI。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=1200&h=800&fit=crop"},
-  {"id": 26, "title": "水墨江南", "category": "brand", "year": "2022", "description": "文旅品牌的视觉识别", "client": "水墨江南", "tags": "品牌识别、视觉系统、包装设计", "detail": "文旅品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=800&fit=crop"},
-  {"id": 27, "title": "生物科技", "category": "brand", "year": "2025", "description": "生物科技企业的品牌视觉", "client": "生物科技", "tags": "品牌识别、视觉系统、包装设计", "detail": "生物科技企业的品牌视觉。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=1200&h=800&fit=crop"},
-  {"id": 28, "title": "时尚芭莎", "category": "strategy", "year": "2024", "description": "时尚杂志的视觉策略", "client": "时尚芭莎", "tags": "视觉策略、品牌升级、Campaign", "detail": "时尚杂志的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=800&fit=crop"},
-  {"id": 29, "title": "出行无忧", "category": "digital", "year": "2023", "description": "出行平台的品牌重塑", "client": "出行无忧", "tags": "数字体验、UI/UX、品牌设计", "detail": "出行平台的品牌重塑。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=800&fit=crop"},
-  {"id": 30, "title": "禅茶一味", "category": "brand", "year": "2022", "description": "茶文化品牌的视觉识别", "client": "禅茶一味", "tags": "品牌识别、视觉系统、包装设计", "detail": "茶文化品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=1200&h=800&fit=crop"},
-  {"id": 31, "title": "人工智能", "category": "brand", "year": "2025", "description": "AI企业的品牌视觉系统", "client": "人工智能", "tags": "品牌识别、视觉系统、包装设计", "detail": "AI企业的品牌视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=800&fit=crop"},
-  {"id": 32, "title": "美味人生", "category": "strategy", "year": "2024", "description": "食品品牌的视觉策略", "client": "美味人生", "tags": "视觉策略、品牌升级、Campaign", "detail": "食品品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=800&fit=crop"},
-  {"id": 33, "title": "社交达人", "category": "digital", "year": "2023", "description": "社交平台的品牌与UI设计", "client": "社交达人", "tags": "数字体验、UI/UX、品牌设计", "detail": "社交平台的品牌与UI设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&h=800&fit=crop"},
-  {"id": 34, "title": "山水之间", "category": "brand", "year": "2022", "description": "民宿品牌的视觉识别", "client": "山水之间", "tags": "品牌识别、视觉系统、包装设计", "detail": "民宿品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1200&h=800&fit=crop"},
-  {"id": 35, "title": "清洁能源", "category": "brand", "year": "2025", "description": "新能源企业的品牌设计", "client": "清洁能源", "tags": "品牌识别、视觉系统、包装设计", "detail": "新能源企业的品牌设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&h=800&fit=crop"},
-  {"id": 36, "title": "潮流生活", "category": "strategy", "year": "2024", "description": "生活方式品牌的视觉策略", "client": "潮流生活", "tags": "视觉策略、品牌升级、Campaign", "detail": "生活方式品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=1200&h=800&fit=crop"},
-  {"id": 37, "title": "在线办公", "category": "digital", "year": "2023", "description": "办公平台的品牌重塑", "client": "在线办公", "tags": "数字体验、UI/UX、品牌设计", "detail": "办公平台的品牌重塑。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=800&fit=crop"},
-  {"id": 38, "title": "古韵新风", "category": "brand", "year": "2022", "description": "文创品牌的视觉识别", "client": "古韵新风", "tags": "品牌识别、视觉系统、包装设计", "detail": "文创品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=1200&h=800&fit=crop"},
-  {"id": 39, "title": "深海探索", "category": "brand", "year": "2025", "description": "海洋科技企业的品牌视觉", "client": "深海探索", "tags": "品牌识别、视觉系统、包装设计", "detail": "海洋科技企业的品牌视觉。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=1200&h=800&fit=crop"},
-  {"id": 40, "title": "美食地图", "category": "strategy", "year": "2024", "description": "美食平台的视觉策略", "client": "美食地图", "tags": "视觉策略、品牌升级、Campaign", "detail": "美食平台的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&h=800&fit=crop"},
-  {"id": 41, "title": "智慧农业", "category": "digital", "year": "2023", "description": "农业科技平台的品牌与UI", "client": "智慧农业", "tags": "数字体验、UI/UX、品牌设计", "detail": "农业科技平台的品牌与UI。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&h=800&fit=crop"},
-  {"id": 42, "title": "东方美学", "category": "brand", "year": "2022", "description": "艺术品牌的视觉识别", "client": "东方美学", "tags": "品牌识别、视觉系统、包装设计", "detail": "艺术品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=1200&h=800&fit=crop"},
-  {"id": 43, "title": "虚拟现实", "category": "brand", "year": "2025", "description": "VR企业的品牌视觉系统", "client": "虚拟现实", "tags": "品牌识别、视觉系统、包装设计", "detail": "VR企业的品牌视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=1200&h=800&fit=crop"},
-  {"id": 44, "title": "品质生活", "category": "strategy", "year": "2024", "description": "家居品牌的视觉策略", "client": "品质生活", "tags": "视觉策略、品牌升级、Campaign", "detail": "家居品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&h=800&fit=crop"},
-  {"id": 45, "title": "在线购物", "category": "digital", "year": "2023", "description": "电商平台的品牌重塑", "client": "在线购物", "tags": "数字体验、UI/UX、品牌设计", "detail": "电商平台的品牌重塑。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=800&fit=crop"},
-  {"id": 46, "title": "自然之声", "category": "brand", "year": "2022", "description": "环保组织的视觉识别", "client": "自然之声", "tags": "品牌识别、视觉系统、包装设计", "detail": "环保组织的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&h=800&fit=crop"},
-  {"id": 47, "title": "智慧城市", "category": "brand", "year": "2025", "description": "城市科技企业的品牌设计", "client": "智慧城市", "tags": "品牌识别、视觉系统、包装设计", "detail": "城市科技企业的品牌设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&h=800&fit=crop"},
-  {"id": 48, "title": "味道传承", "category": "strategy", "year": "2024", "description": "老字号品牌的视觉策略", "client": "味道传承", "tags": "视觉策略、品牌升级、Campaign", "detail": "老字号品牌的视觉策略。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&h=800&fit=crop"},
-  {"id": 49, "title": "在线教育", "category": "digital", "year": "2023", "description": "教育平台的品牌与UI设计", "client": "在线教育", "tags": "数字体验、UI/UX、品牌设计", "detail": "教育平台的品牌与UI设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200&h=800&fit=crop"},
-  {"id": 50, "title": "东方神韵", "category": "brand", "year": "2022", "description": "文化品牌的视觉识别", "client": "东方神韵", "tags": "品牌识别、视觉系统、包装设计", "detail": "文化品牌的视觉识别。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=1200&h=800&fit=crop"},
-];
+        // ===== SERVICE ACCORDION TOGGLE =====
+        function toggleService(element) {
+            const isOpen = element.classList.contains('open');
 
+            // Close all others
+            document.querySelectorAll('.service-item').forEach(item => {
+                item.classList.remove('open');
+            });
+
+            // Toggle current
+            if (!isOpen) {
+                element.classList.add('open');
+            }
+        }
+
+        // ===== PROJECTS DATA =====
+        const projects = [
+            {"id": 1, "title": "UIOT超级智慧家 · GEO合作战略发布会", "category": "brand", "year": "2026.06", "description": "全屋智能行业 AI 数字化获客新模式主视觉设计", "client": "超级智慧家（上海）物联网科技有限公司", "tags": "品牌识别、视觉系统、活动主视觉", "detail": "全屋智能行业 AI 数字化获客新模式主视觉设计。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。项目涵盖主视觉设计、延展物料、现场布置等全链路视觉落地。", "image": "https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1200&h=800&fit=crop"},
+            {"id": 2, "title": "墨染咖啡", "category": "brand", "year": "2024", "description": "东方美学与现代咖啡文化的视觉融合", "client": "墨染咖啡", "tags": "品牌识别、视觉系统、包装设计", "detail": "东方美学与现代咖啡文化的视觉融合。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200&h=800&fit=crop"},
+            {"id": 3, "title": "流光时尚", "category": "strategy", "year": "2024", "description": "高端女装品牌的全案视觉升级", "client": "流光时尚", "tags": "视觉策略、品牌升级、Campaign", "detail": "高端女装品牌的全案视觉升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&h=800&fit=crop"},
+            {"id": 4, "title": "青禾文化", "category": "brand", "year": "2023", "description": "艺术展览机构的视觉识别与空间导视", "client": "青禾文化", "tags": "品牌识别、视觉系统、空间导视", "detail": "艺术展览机构的视觉识别与空间导视。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=1200&h=800&fit=crop"},
+            {"id": 5, "title": "星辰教育", "category": "digital", "year": "2023", "description": "在线教育平台的品牌重塑与UI/UX", "client": "星辰教育", "tags": "数字体验、UI/UX、品牌设计", "detail": "在线教育平台的品牌重塑与UI/UX。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=1200&h=800&fit=crop"},
+            {"id": 6, "title": "野境户外", "category": "brand", "year": "2022", "description": "户外装备品牌的野性美学视觉系统", "client": "野境户外", "tags": "品牌识别、视觉系统、包装设计", "detail": "户外装备品牌的野性美学视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=800&fit=crop"},
+            {"id": 7, "title": "智链科技", "category": "brand", "year": "2025", "description": "区块链企业的品牌识别与视觉系统", "client": "智链科技", "tags": "品牌识别、视觉系统、科技品牌", "detail": "区块链企业的品牌识别与视觉系统。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=800&fit=crop"},
+            {"id": 8, "title": "锦绣华服", "category": "strategy", "year": "2024", "description": "传统服饰品牌的现代化视觉升级", "client": "锦绣华服", "tags": "视觉策略、品牌升级、Campaign", "detail": "传统服饰品牌的现代化视觉升级。以策略驱动设计，以设计赋能商业，打造兼具美学价值与商业影响力的品牌视觉体系。", "image": "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=1200&h=800&fit=crop"}
+        ];
 
         let currentProjectId = null;
 
@@ -2111,6 +1945,7 @@ const projects = [
         }
 
         document.querySelectorAll('.border-glow-card').forEach(card => {
+            // Mouse interaction
             card.addEventListener('pointermove', (e) => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -2126,6 +1961,63 @@ const projects = [
             card.addEventListener('pointerleave', () => {
                 card.style.setProperty('--edge-proximity', '0');
             });
+
+            // Touch interaction for mobile
+            card.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = card.getBoundingClientRect();
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+
+                const edge = getEdgeProximity(card, x, y);
+                const angle = getCursorAngle(card, x, y);
+
+                card.style.setProperty('--edge-proximity', `${(edge * 100).toFixed(3)}`);
+                card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
+            }, { passive: false });
+
+            card.addEventListener('touchend', () => {
+                card.style.setProperty('--edge-proximity', '0');
+            });
+        });
+
+        // ===== SWEEP ANIMATION ON SCROLL =====
+        const sweepObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    card.classList.add('sweep-active');
+
+                    // Animate edge proximity
+                    gsap.to(card, {
+                        '--edge-proximity': 100,
+                        duration: 1.5,
+                        ease: 'power2.inOut',
+                        onComplete: () => {
+                            gsap.to(card, {
+                                '--edge-proximity': 0,
+                                duration: 1,
+                                ease: 'power2.out',
+                                onComplete: () => card.classList.remove('sweep-active')
+                            });
+                        }
+                    });
+
+                    // Animate cursor angle
+                    gsap.to(card, {
+                        '--cursor-angle': '360deg',
+                        duration: 2.5,
+                        ease: 'none'
+                    });
+
+                    sweepObserver.unobserve(card);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.border-glow-card').forEach((card, i) => {
+            if (i < 3) sweepObserver.observe(card); // Only first 3 cards get sweep animation
         });
     </script>
 </body>
