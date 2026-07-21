@@ -101,15 +101,13 @@
 
         /* ===== STAGGERED TEXT ANIMATION ===== */
         .stagger-char {
-            display: inline-block;
-            opacity: 0.15;
-            transform: translateY(20px);
+            display: inline;
+            opacity: 0;
             color: #f5f0e8;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.5s ease;
         }
         .stagger-char.visible {
             opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .stagger-char.visible.highlight-char {
             color: #c4956a;
@@ -120,11 +118,12 @@
         .hero-title { 
             font-family: "Microsoft YaHei", "微软雅黑", "Garamond", "Times New Roman", serif;
             font-size: clamp(2.8rem, 7vw, 6.5rem); 
-            line-height: 1.08; 
-            letter-spacing: -0.02em; 
+            line-height: 1.2; 
+            letter-spacing: 0.02em; 
             font-weight: 400;
             position: relative;
             color: #f5f0e8;
+            white-space: nowrap;
         }
         .hero-title::before {
             content: '';
@@ -820,16 +819,30 @@
         }
 
         /* ===== SHINY TEXT EFFECT ===== */
-        /* Fallback: 文字始终可见，纯色显示 */
         .shiny-text-line {
             position: relative;
             color: #f5f0e8;
-            text-shadow: 0 0 40px rgba(196, 149, 106, 0.15);
+            display: block;
+            width: 100%;
+        }
+
+        .shiny-text-line .stagger-char {
+            opacity: 0;
+            transition: opacity 0.4s ease, color 0.4s ease;
+        }
+
+        .shiny-text-line.animate .stagger-char {
+            opacity: 1;
+        }
+
+        .shiny-text-line.animate .stagger-char.highlight-char {
+            color: #c4956a;
+            text-shadow: 0 0 30px rgba(196, 149, 106, 0.35);
         }
 
         /* Progressive Enhancement: 支持 background-clip 的浏览器显示光泽效果 */
         @supports (-webkit-background-clip: text) or (background-clip: text) {
-            .shiny-text-line {
+            .shiny-text-line.animate {
                 background: linear-gradient(
                     120deg,
                     #f5f0e8 25%,
@@ -846,12 +859,16 @@
                 color: transparent;
                 animation: shine-sweep 5s ease-in-out infinite;
                 filter: drop-shadow(0 0 60px rgba(196, 149, 106, 0.12));
+            }
+
+            .shiny-text-line.animate .stagger-char {
+                color: transparent;
+                opacity: 1;
+            }
+
+            .shiny-text-line.animate .stagger-char.highlight-char {
                 text-shadow: none;
             }
-        }
-
-        .shiny-text-line:nth-child(2) {
-            animation-delay: 0.6s;
         }
 
         @keyframes shine-sweep {
@@ -870,10 +887,9 @@
                 text-shadow: 0 0 20px rgba(196, 149, 106, 0.1);
             }
             @supports (-webkit-background-clip: text) or (background-clip: text) {
-                .shiny-text-line {
+                .shiny-text-line.animate {
                     animation-duration: 4s;
                     filter: drop-shadow(0 0 30px rgba(196, 149, 106, 0.08));
-                    text-shadow: none;
                 }
             }
             .floating-social { display: none !important; }
@@ -1006,7 +1022,7 @@
                 <div class="col-span-12 md:col-span-8 text-center order-1 md:order-2 py-12 md:py-0">
                     <div class="hero-label mb-8 opacity-0" id="hero-label">Brand Designer & Visual Strategist</div>
 
-                    <h1 class="hero-title mb-4" id="hero-title" style="opacity: 1;">
+                    <h1 class="hero-title mb-4" id="hero-title">
                         <span class="block shiny-text-line" id="hero-line1"></span>
                         <span class="block mt-2 md:mt-4 shiny-text-line" id="hero-line2"></span>
                     </h1>
@@ -1775,21 +1791,45 @@
         function initHeroAnim() {
             const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-            // Reveal staggered characters with highlight on key chars
-            document.querySelectorAll('#hero-line1 .stagger-char, #hero-line2 .stagger-char').forEach((char, i) => {
+            // 先确保标题容器可见
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle) {
+                heroTitle.style.opacity = '1';
+            }
+
+            // 逐字显示动画
+            const chars1 = document.querySelectorAll('#hero-line1 .stagger-char');
+            const chars2 = document.querySelectorAll('#hero-line2 .stagger-char');
+
+            // 第一行逐字显示
+            chars1.forEach((char, i) => {
                 setTimeout(() => {
                     char.classList.add('visible');
                     if (char.dataset.highlight === 'true') {
                         char.classList.add('highlight-char');
                     }
-                }, i * 35);
+                }, 300 + i * 40);
             });
 
+            // 第二行逐字显示（延迟开始）
+            chars2.forEach((char, i) => {
+                setTimeout(() => {
+                    char.classList.add('visible');
+                    if (char.dataset.highlight === 'true') {
+                        char.classList.add('highlight-char');
+                    }
+                }, 600 + i * 40);
+            });
+
+            // 两行都显示完后，添加 animate 类启用光泽效果
+            setTimeout(() => {
+                document.getElementById('hero-line1')?.classList.add('animate');
+                document.getElementById('hero-line2')?.classList.add('animate');
+            }, 1200);
+
             heroTl.to('#hero-label', { opacity: 1, y: 0, duration: 1 }, 0.3)
-                  .to('#hero-title', { opacity: 1, duration: 0.5 }, 0.2)
                   .add(() => {
                       document.getElementById('hero-deco').classList.add('visible');
-                      document.getElementById('hero-title').classList.add('visible');
                   }, 0.8)
                   .to('#hero-desc', { opacity: 1, y: 0, duration: 1 }, 1.0)
                   .to('#hero-cta', { opacity: 1, y: 0, duration: 0.8 }, 1.3)
@@ -1801,7 +1841,6 @@
         }
 
         gsap.set('#hero-label, #hero-desc, #hero-cta', { opacity: 0, y: 30 });
-        gsap.set('#hero-title', { opacity: 0.95 });
         gsap.set('#scroll-hint', { opacity: 0 });
 
         // ===== NAV SCROLL EFFECT =====
