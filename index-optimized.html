@@ -6,9 +6,19 @@
     <title>薛志超 — 品牌设计师</title>
     <meta name="description" content="薛志超 — 聚焦品牌体系构建，深耕品牌设计与活动视觉落地">
 
+    <!-- DNS Prefetch & Preconnect for external resources -->
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://d8j0ntlcm91z4.cloudfront.net">
+    <link rel="dns-prefetch" href="https://db.onlinewebfonts.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="preconnect" href="https://d8j0ntlcm91z4.cloudfront.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://db.onlinewebfonts.com">
-    <link href="https://db.onlinewebfonts.com/c/2bf40ab72ea4897a3fd9b6e48b233a19?family=Garamond" rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/2bf40ab72ea4897a3fd9b6e48b233a19?family=Garamond&display=swap" rel="stylesheet">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -923,6 +933,55 @@
         }
         .skip-link:focus { top: 0; }
 
+
+        /* ===== IMAGE PRELOADING & SKELETON LOADER ===== */
+        .skeleton-loader {
+            width: 100%;
+            min-height: 300px;
+            background: linear-gradient(90deg, #0a0a0a 25%, #141414 50%, #0a0a0a 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(245, 240, 232, 0.04);
+        }
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .skeleton-loader::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(196, 149, 106, 0.2);
+            border-top-color: #c4956a;
+            border-radius: 50%;
+            animation: skeleton-spin 0.8s linear infinite;
+        }
+        @keyframes skeleton-spin {
+            to { transform: rotate(360deg); }
+        }
+        .modal-gallery-img {
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-gallery-img.loaded {
+            opacity: 1;
+        }
+        
+        /* ===== PRELOAD PROGRESS INDICATOR ===== */
+        #preload-progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #c4956a, #f5f0e8);
+            z-index: 9999;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+    
         /* ===== FOCUS VISIBLE GLOBAL ===== */
         a:focus-visible,
         button:focus-visible {
@@ -945,6 +1004,9 @@
             <div class="mt-4 text-stone text-xs tracking-[0.2em] uppercase">Brand Designer</div>
         </div>
     </div>
+
+    <!-- Preload Progress Bar -->
+    <div id="preload-progress" aria-hidden="true"></div>
 
     <!-- ===== NAVIGATION ===== -->
     <nav id="mainNav" class="fixed top-0 left-0 w-full z-50 nav-glass border-b border-white/[0.04] transition-transform duration-500 nav-visible">
@@ -1002,6 +1064,7 @@
             muted 
             loop 
             playsinline
+            preload="metadata"
             poster="https://images.unsplash.com/photo-1635070041078-e633dbe09918?w=1920&h=1080&fit=crop"
             aria-hidden="true"
         >
@@ -2019,6 +2082,64 @@
 
         let currentProjectId = null;
 
+        // ===== IMAGE PRELOAD CACHE =====
+        const imageCache = new Map();
+        let preloadComplete = false;
+
+        function preloadImages() {
+            if (preloadComplete) return;
+            const allImages = [];
+            projects.forEach(p => {
+                if (p.images) allImages.push(...p.images);
+                if (p.image) allImages.push(p.image);
+            });
+            
+            const progressBar = document.getElementById('preload-progress');
+            let loaded = 0;
+            const total = allImages.length;
+            
+            allImages.forEach(src => {
+                if (imageCache.has(src)) return;
+                const img = new Image();
+                img.onload = () => {
+                    imageCache.set(src, img);
+                    loaded++;
+                    if (progressBar) {
+                        progressBar.style.width = (loaded / total * 100) + '%';
+                        if (loaded >= total) {
+                            setTimeout(() => { progressBar.style.opacity = '0'; }, 500);
+                        }
+                    }
+                };
+                img.onerror = () => {
+                    loaded++;
+                    if (progressBar) {
+                        progressBar.style.width = (loaded / total * 100) + '%';
+                    }
+                };
+                img.src = src;
+            });
+            preloadComplete = true;
+        }
+
+        // Start preloading after initial page load
+        if (document.readyState === 'complete') {
+            setTimeout(preloadImages, 1000);
+        } else {
+            window.addEventListener('load', () => setTimeout(preloadImages, 500));
+        }
+        // Also start preloading when user scrolls near works section
+        const worksObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadImages();
+                    worksObserver.disconnect();
+                }
+            });
+        }, { rootMargin: '200px' });
+        const worksSection = document.getElementById('works');
+        if (worksSection) worksObserver.observe(worksSection);
+
         function openProjectModal(id) {
             const project = projects.find(p => p.id === id);
             if (!project) return;
@@ -2026,25 +2147,87 @@
 
             const catMap = { 'brand': '品牌识别', 'strategy': '视觉策略', 'digital': '数字体验' };
 
-            // 渲染多图画廊
+            // 渲染多图画廊 - with skeleton loader
             const galleryEl = document.getElementById('modal-gallery');
             galleryEl.innerHTML = '';
+            
             if (project.images && project.images.length > 0) {
                 project.images.forEach((imgSrc, idx) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.style.position = 'relative';
+                    wrapper.style.width = '100%';
+                    
+                    // Add skeleton loader first
+                    const skeleton = document.createElement('div');
+                    skeleton.className = 'skeleton-loader';
+                    skeleton.style.position = 'absolute';
+                    skeleton.style.inset = '0';
+                    skeleton.style.zIndex = '1';
+                    wrapper.appendChild(skeleton);
+                    
                     const img = document.createElement('img');
-                    img.src = imgSrc;
                     img.alt = project.title + (project.images.length > 1 ? ' - 图 ' + (idx + 1) : '');
                     img.className = 'modal-gallery-img';
+                    img.style.position = 'relative';
+                    img.style.zIndex = '2';
                     img.loading = idx === 0 ? 'eager' : 'lazy';
-                    galleryEl.appendChild(img);
+                    img.decoding = 'async';
+                    
+                    // Check cache first
+                    if (imageCache.has(imgSrc)) {
+                        img.src = imgSrc;
+                        skeleton.style.display = 'none';
+                        img.classList.add('loaded');
+                    } else {
+                        img.onload = () => {
+                            skeleton.style.display = 'none';
+                            img.classList.add('loaded');
+                            imageCache.set(imgSrc, img);
+                        };
+                        img.onerror = () => {
+                            skeleton.style.display = 'none';
+                            img.style.opacity = '1';
+                        };
+                        img.src = imgSrc;
+                    }
+                    
+                    wrapper.appendChild(img);
+                    galleryEl.appendChild(wrapper);
                 });
             } else if (project.image) {
                 // 兼容旧数据
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'relative';
+                wrapper.style.width = '100%';
+                
+                const skeleton = document.createElement('div');
+                skeleton.className = 'skeleton-loader';
+                skeleton.style.position = 'absolute';
+                skeleton.style.inset = '0';
+                skeleton.style.zIndex = '1';
+                wrapper.appendChild(skeleton);
+                
                 const img = document.createElement('img');
-                img.src = project.image;
                 img.alt = project.title;
                 img.className = 'modal-gallery-img';
-                galleryEl.appendChild(img);
+                img.style.position = 'relative';
+                img.style.zIndex = '2';
+                
+                if (imageCache.has(project.image)) {
+                    img.src = project.image;
+                    skeleton.style.display = 'none';
+                    img.classList.add('loaded');
+                } else {
+                    img.onload = () => {
+                        skeleton.style.display = 'none';
+                        img.classList.add('loaded');
+                        imageCache.set(project.image, img);
+                    };
+                    img.src = project.image;
+                }
+                
+                wrapper.appendChild(img);
+                galleryEl.appendChild(wrapper);
             }
 
             document.getElementById('modal-title').textContent = project.title;
@@ -2080,7 +2263,19 @@
             const visibleIds = visibleItems.map(item => parseInt(item.dataset.id)).sort((a,b) => a-b);
             const currentIdx = visibleIds.indexOf(currentProjectId);
             const nextIdx = (currentIdx + 1) % visibleIds.length;
-            openProjectModal(visibleIds[nextIdx]);
+            const nextId = visibleIds[nextIdx];
+            // Preload next project's images before switching
+            const nextProject = projects.find(p => p.id === nextId);
+            if (nextProject && nextProject.images) {
+                nextProject.images.forEach(src => {
+                    if (!imageCache.has(src)) {
+                        const preImg = new Image();
+                        preImg.onload = () => imageCache.set(src, preImg);
+                        preImg.src = src;
+                    }
+                });
+            }
+            openProjectModal(nextId);
         }
 
         function prevProject() {
@@ -2088,7 +2283,19 @@
             const visibleIds = visibleItems.map(item => parseInt(item.dataset.id)).sort((a,b) => a-b);
             const currentIdx = visibleIds.indexOf(currentProjectId);
             const prevIdx = (currentIdx - 1 + visibleIds.length) % visibleIds.length;
-            openProjectModal(visibleIds[prevIdx]);
+            const prevId = visibleIds[prevIdx];
+            // Preload prev project's images before switching
+            const prevProject = projects.find(p => p.id === prevId);
+            if (prevProject && prevProject.images) {
+                prevProject.images.forEach(src => {
+                    if (!imageCache.has(src)) {
+                        const preImg = new Image();
+                        preImg.onload = () => imageCache.set(src, preImg);
+                        preImg.src = src;
+                    }
+                });
+            }
+            openProjectModal(prevId);
         }
 
         document.addEventListener('keydown', (e) => {
@@ -2097,6 +2304,25 @@
             if (e.key === 'Escape') closeProjectModal();
             if (e.key === 'ArrowRight') nextProject();
             if (e.key === 'ArrowLeft') prevProject();
+
+        // ===== ENHANCED LAZY LOADING FOR THUMBNAILS =====
+        const imgObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    imgObserver.unobserve(img);
+                }
+            });
+        }, { rootMargin: '100px' });
+
+        document.querySelectorAll('.masonry-item img[loading="lazy"]').forEach(img => {
+            imgObserver.observe(img);
+        });
+        
         });
 
         // ===== SMOOTH SCROLL =====
