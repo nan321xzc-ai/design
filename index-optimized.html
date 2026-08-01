@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>薛志超 — 品牌设计师</title>
     <meta name="description" content="薛志超 — 聚焦品牌体系构建，深耕品牌设计与活动视觉落地">
+    <meta name="theme-color" content="#010101">
+    <meta name="color-scheme" content="dark">
+    <meta property="og:title" content="薛志超 — 品牌设计师">
+    <meta property="og:description" content="薛志超 — 聚焦品牌体系构建，深耕品牌设计与活动视觉落地">
+    <meta property="og:type" content="website">
 
     <!-- DNS Prefetch & Preconnect for external resources -->
     <link rel="dns-prefetch" href="https://images.unsplash.com">
@@ -70,37 +75,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); 
         }
 
-        /* ===== LIQUID GLASS ===== */
-        .liquid-glass {
-            background: rgba(255, 255, 255, 0.01);
-            background-blend-mode: luminosity;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border: none;
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .liquid-glass::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1.4px;
-            background: linear-gradient(180deg,
-                rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
-                rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
-                rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-        .liquid-glass:hover {
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15);
-        }
-        .liquid-glass:active { transform: scale(0.98); }
+        /* ===== LIQUID GLASS（HTML 中未使用，已移除） ===== */
 
         /* ===== NAV GLASS ===== */
         .nav-glass { 
@@ -209,19 +184,6 @@
         }
 
         /* ===== SERVICES ===== */
-        .service-item { 
-            border-top: 1px solid rgba(245, 240, 232, 0.06); 
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
-            cursor: pointer;
-        }
-        .service-item:hover { 
-            background: rgba(196, 149, 106, 0.02); 
-            padding-left: 1.5rem; 
-            border-color: rgba(196, 149, 106, 0.15);
-        }
-        .service-item:hover .service-arrow { transform: translateX(6px); opacity: 1; }
-        .service-item.open { background: rgba(196, 149, 106, 0.03); }
-        .service-arrow { opacity: 0.3; transition: all 0.4s ease; }
         .service-preview {
             display: flex;
             gap: 0.5rem;
@@ -229,11 +191,6 @@
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.4s ease;
-        }
-        .service-item:hover .service-preview,
-        .service-item.open .service-preview {
-            opacity: 1;
-            transform: translateY(0);
         }
         .service-preview img {
             width: 60px;
@@ -485,6 +442,7 @@
 
         /* ===== REDUCED MOTION ===== */
         @media (prefers-reduced-motion: reduce) { 
+            html { scroll-behavior: auto !important; }
             *, *::before, *::after { 
                 animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; 
             }
@@ -1798,6 +1756,9 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
+        // 是否启用"减少动态效果"（无障碍偏好）
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         // ===== STAGGERED TEXT ANIMATION =====
         function createStaggeredText(elementId, text) {
             const el = document.getElementById(elementId);
@@ -1825,6 +1786,11 @@
             const animatedCounters = new Set();
 
             counters.forEach(counter => {
+                if (reduceMotion) {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    counter.textContent = target + '+';
+                    return;
+                }
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting && !animatedCounters.has(counter)) {
@@ -1875,6 +1841,19 @@
                 heroTitle.style.opacity = '1';
             }
 
+            // 开启"减少动态效果"时，直接进入最终可见状态，不做逐帧动画
+            if (reduceMotion) {
+                document.querySelectorAll('.stagger-char').forEach(c => c.classList.add('visible'));
+                document.getElementById('hero-line1')?.classList.add('animate');
+                document.getElementById('hero-line2')?.classList.add('animate');
+                ['#hero-label', '#hero-desc', '#hero-cta', '#scroll-hint'].forEach(sel => {
+                    const el = document.querySelector(sel);
+                    if (el) { el.style.opacity = '1'; el.style.transform = 'none'; }
+                });
+                document.getElementById('floatingSocial')?.classList.add('visible');
+                return;
+            }
+
             // 逐字显示动画
             const chars1 = document.querySelectorAll('#hero-line1 .stagger-char');
             const chars2 = document.querySelectorAll('#hero-line2 .stagger-char');
@@ -1918,15 +1897,18 @@
                   }, 2.0);
         }
 
-        gsap.set('#hero-label, #hero-desc, #hero-cta', { opacity: 0, y: 30 });
-        gsap.set('#scroll-hint', { opacity: 0 });
+        if (!reduceMotion) {
+            gsap.set('#hero-label, #hero-desc, #hero-cta', { opacity: 0, y: 30 });
+            gsap.set('#scroll-hint', { opacity: 0 });
+        }
 
         // ===== NAV SCROLL EFFECT =====
         let lastScroll = 0;
+        let scrollTicking = false;
         const mainNav = document.getElementById('mainNav');
         const backToTop = document.getElementById('backToTop');
 
-        window.addEventListener('scroll', () => {
+        function handleScroll() {
             const currentScroll = window.scrollY;
 
             // Nav show/hide
@@ -1947,6 +1929,14 @@
 
             mainNav.style.borderColor = currentScroll > 100 ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.03)';
             lastScroll = currentScroll;
+            scrollTicking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!scrollTicking) {
+                requestAnimationFrame(handleScroll);
+                scrollTicking = true;
+            }
         }, { passive: true });
 
         // Back to top click handler
@@ -1955,6 +1945,7 @@
         });
 
         // ===== SCROLL TRIGGERED ANIMATIONS =====
+        if (!reduceMotion) {
         gsap.utils.toArray('.gsap-stat').forEach((el, i) => {
             gsap.from(el, { 
                 scrollTrigger: { trigger: el, start: 'top 85%' }, 
@@ -1969,11 +1960,6 @@
             });
         });
 
-        gsap.from('.service-item', { 
-            scrollTrigger: { trigger: '#services', start: 'top 70%' }, 
-            opacity: 0, x: -20, duration: 0.6, stagger: 0.1, ease: 'power3.out' 
-        });
-
         gsap.from('.gsap-testimonial', { 
             scrollTrigger: { trigger: '#testimonials', start: 'top 75%' }, 
             opacity: 0, y: 40, duration: 0.8, stagger: 0.15, ease: 'power3.out' 
@@ -1985,6 +1971,7 @@
             y: 100,
             opacity: 0.3
         });
+        }
 
         // ===== MOBILE MENU =====
         const menuToggle = document.getElementById('menuToggle');
@@ -2088,38 +2075,27 @@
 
         function preloadImages() {
             if (preloadComplete) return;
-            const allImages = [];
-            projects.forEach(p => {
-                if (p.images) allImages.push(...p.images);
-                if (p.image) allImages.push(p.image);
-            });
-            
+            preloadComplete = true;
             const progressBar = document.getElementById('preload-progress');
+            // 仅预加载每个项目的首图；其余大图在打开弹窗时按需加载（已带骨架屏 + 缓存）
+            const firstImages = projects
+                .map(p => (p.images && p.images[0]) || p.image)
+                .filter(Boolean);
+            const total = firstImages.length;
+            if (total === 0) { if (progressBar) progressBar.style.opacity = '0'; return; }
             let loaded = 0;
-            const total = allImages.length;
-            
-            allImages.forEach(src => {
-                if (imageCache.has(src)) return;
+            const updateProgress = () => {
+                if (!progressBar) return;
+                progressBar.style.width = (loaded / total * 100) + '%';
+                if (loaded >= total) setTimeout(() => { progressBar.style.opacity = '0'; }, 500);
+            };
+            firstImages.forEach(src => {
+                if (imageCache.has(src)) { loaded++; updateProgress(); return; }
                 const img = new Image();
-                img.onload = () => {
-                    imageCache.set(src, img);
-                    loaded++;
-                    if (progressBar) {
-                        progressBar.style.width = (loaded / total * 100) + '%';
-                        if (loaded >= total) {
-                            setTimeout(() => { progressBar.style.opacity = '0'; }, 500);
-                        }
-                    }
-                };
-                img.onerror = () => {
-                    loaded++;
-                    if (progressBar) {
-                        progressBar.style.width = (loaded / total * 100) + '%';
-                    }
-                };
+                img.onload = () => { imageCache.set(src, img); loaded++; updateProgress(); };
+                img.onerror = () => { loaded++; updateProgress(); };
                 img.src = src;
             });
-            preloadComplete = true;
         }
 
         // Start preloading after initial page load
@@ -2304,25 +2280,6 @@
             if (e.key === 'Escape') closeProjectModal();
             if (e.key === 'ArrowRight') nextProject();
             if (e.key === 'ArrowLeft') prevProject();
-
-        // ===== ENHANCED LAZY LOADING FOR THUMBNAILS =====
-        const imgObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    }
-                    imgObserver.unobserve(img);
-                }
-            });
-        }, { rootMargin: '100px' });
-
-        document.querySelectorAll('.masonry-item img[loading="lazy"]').forEach(img => {
-            imgObserver.observe(img);
-        });
-        
         });
 
         // ===== SMOOTH SCROLL =====
@@ -2420,9 +2377,11 @@
         });
 
         // ===== PREFERS REDUCED MOTION =====
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (prefersReducedMotion.matches) {
-            gsap.globalTimeline.clear();
+        // 滚动揭示动画与英雄区入场动画已通过 !reduceMotion 守卫处理，因此“减少动态效果”下
+        // 内容直接保持可见。此处仅清理滚动触发器即可。
+        // 注意：绝不可调用 gsap.globalTimeline.clear() —— 它会一并清掉加载层时间线，
+        // 导致 #loader 永远停留在页面上方，整页无法操作。
+        if (reduceMotion) {
             ScrollTrigger.getAll().forEach(t => t.kill());
         }
     </script>
