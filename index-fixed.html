@@ -2228,6 +2228,8 @@
                 if (closeBtn) closeBtn.focus();
                 trapFocus(modal);
             }
+            // 暴露到全局作用域，供 HTML 内联 onclick="openProjectModal(N)" 调用
+            window.openProjectModal = openProjectModal;
 
             function closeProjectModal() {
                 const modal = document.getElementById('project-modal');
@@ -2240,6 +2242,8 @@
                 }, 400);
                 if (modalLastFocus) modalLastFocus.focus();
             }
+            // 暴露到全局作用域，供 HTML 内联 onclick="closeProjectModal()" 调用
+            window.closeProjectModal = closeProjectModal;
 
             window.closeModalOnOverlay = function (e) {
                 if (e.target === e.currentTarget) closeProjectModal();
